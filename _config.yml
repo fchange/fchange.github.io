@@ -80,7 +80,12 @@ feed:
   type: atom
   path: atom.xml
   limit: 20
-  
+#search
+search:
+  path: search.xml
+  field: post
+
+
 ## Themes: https://hexo.io/themes/
 # theme: hexo-theme-red
 theme: pln

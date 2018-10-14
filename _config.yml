@@ -72,11 +72,23 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
+#RSS订阅
+plugin:
+  - hexo-generator-feed
+#Feed Atom
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  
 ## Themes: https://hexo.io/themes/
 # theme: hexo-theme-red
 theme: pln
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
-deploy: 
-  type:
+deploy:
+  type: git   
+  repo: git@github.com:fchange/fchange.github.io.git
+  branch: master
+  # message: [message]  #leave this blank

@@ -9,7 +9,7 @@ tags:
 ---
 
 用最清晰简洁的方法整合一个响应式相册
-![示意图](http://o7o8kqz7a.bkt.clouddn.com/image/180224/iKhLJDE8mH.png)
+![示意图](/blogimg/25.png)
 <!-- more -->
 [效果](https://fchange.github.io/photo/)
 
@@ -34,7 +34,8 @@ tags:
 ## 相册页面
 我们需要一个相册页面以加载所有照片
 
-``` Html
+```Html
+
 ---
 title: 相册
 noDate: 'true'
@@ -166,7 +167,7 @@ js文件也可以放在Images文件夹下，只需要将相册页面加载的`<s
 ```
 
 ## 自动构建
-我是使用[travis-ci](https://www.travis-ci.org/)自动构建的。（用过以后表示很鸡肋）
+我是使用过[travis-ci](https://www.travis-ci.org/)自动构建的。（用过以后表示很鸡肋）
 如果你也使用了这个的话，在`travis.yml`中的`script`或者`before_script`,添加一句`node tool.js`,就可以将相册脚本也加入自动构建：
 
 ``` javaScript

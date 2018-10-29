@@ -14,31 +14,15 @@ noDate: 'true'
 <script src="/js/photo.js"></script>
 
 <style>
-.ImageGrid {
-  width: 100%;
-  max-width: 1040px;
-  margin: 0 auto;
-  text-align: center;
-  margin: : 20px 0;
-}
+  .ImageGrid { width: 100%; max-width: 1040px; margin: 0 auto; text-align: center; margin: : 20p;}
 
-.card {
-  overflow: hidden;
-  transition: .3s ease-in-out;
-  border-radius: 8px;
-  background-color: #ddd;
-}
+  .card { overflow: hidden; transition: .3s ease-in-out; border-radius: 8px; background-color: #ddd;}
 
-.ImageInCard img {
-  padding: 0 0 0 0 !important;
-  height: 100%;
-}
+  .ImageInCard img {padding: 0 0 0 0 !important;height: 100%;}
 
-.TextInCard {
-  line-height: 54px;
-  background-color: #f6f6f6;
-  font-size: 24px;
-}
+  .TextInCard {line-height: 54px;background-color: #f6f6f6;font-size: 24px;}
+  
+  .fancybox-image { transform: none!important;}
 </style>
 
 

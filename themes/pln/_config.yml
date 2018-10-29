@@ -5,12 +5,12 @@ menu:
 logo: Fchange
 
 more:
-  友情链接: /links.html
+  友情链接: /links/
   Github: https://github.com/fchange/
   # 微博: http://weibo.com/XXX
   # 知乎: https://www.zhihu.com/people/XXX
   # rss: /rss2.xml
-  rss: /atom.xml
+  RSS: /atom.xml
   相册: /photo/
   关于我: /about/
 

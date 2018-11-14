@@ -75,6 +75,7 @@ pagination_dir: page
 #RSS订阅
 plugin:
   - hexo-generator-feed
+  
 #Feed Atom
 feed:
   type: atom
@@ -87,8 +88,8 @@ search:
 
 
 ## Themes: https://hexo.io/themes/
-# theme: hexo-theme-red
 theme: pln
+# theme: even
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

@@ -5,14 +5,14 @@ menu:
 logo: Fchange
 
 more:
-  友情链接: /links/
-  Github: https://github.com/fchange/
+  Friends: /links/
   # 微博: http://weibo.com/XXX
   # 知乎: https://www.zhihu.com/people/XXX
   # rss: /rss2.xml
+  Photos: /photo/
+  Github: https://github.com/fchange/
+  About: /about/
   RSS: /atom.xml
-  相册: /photo/
-  关于我: /about/
 
 show_toc_bool: true
 
@@ -28,6 +28,7 @@ valine:
   verify: false # valine verify code (true/false)
   notify: false # valine mail notify (true/false)
   lang: zh-cn
+  visitor: true
 
 busuanzi:
   enable: false

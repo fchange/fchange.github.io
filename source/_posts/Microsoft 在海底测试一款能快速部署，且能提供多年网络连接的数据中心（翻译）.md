@@ -7,6 +7,8 @@ tags:
 - 翻译
 ---
 翻译自news.microsoft.com ， [原文链接](https://news.microsoft.com/features/under-the-sea-microsoft-tests-a-datacenter-thats-quick-to-deploy-could-provide-internet-connectivity-for-years/)。
+
+
 微软正在利用来自潜艇的技术，并与海洋能源领域的先驱者们合作，为其登月计划的第二阶段开发能自给自足的水下数据中心，该数据中心可以向沿海城市提供闪电般迅速的云服务。微软今天宣布，在苏格兰奥克尼群岛(Orkney Islands)附近的海底，一个装载集装箱大小的实验式样机已经开始正常工作。
 
 群岛北部的部署数据中心，是微软在欧洲海洋能源中心项目Natick的一个里程碑,一个多年的研究努力调查生产环境和操作环境可持续方案，以可计量最小单位的数据中心单元打包,快速部署并在海底多年完成操作。（rapidly deployed and left to operate lights out on the seafloor for years.）

@@ -1,0 +1,3 @@
+sass main.scss:m.min.css --style compressed
+Лђеп
+sass --watch main.scss:m.min.css --style compressed

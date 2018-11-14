@@ -11,7 +11,7 @@ noDate: 'true'
 
 <div class="ImageGrid"></div>
 
-<script src="/js/photo.js"></script>
+<script src="/photo/photo.js"></script>
 
 <style>
   .ImageGrid { width: 100%; max-width: 1040px; margin: 0 auto; text-align: center; margin: : 20p;}

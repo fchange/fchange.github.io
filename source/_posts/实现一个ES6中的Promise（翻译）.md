@@ -8,9 +8,11 @@ tags:
  - javaScript
 ---
 
-翻译自www.promisejs.org ， [原文链接](https://www.promisejs.org/implementing/)。
-## 翻译者想说的
+
 由于在开发中突然想知道Promise的生命周期，以及联想到它其实是用状态机来实现的，很想知道它的实现方式，恰好又找到了一篇相对简单却又恰到好处的文章，感觉很不错，所以想搬运过来，原文没有多少晦涩难懂的句子（代码也占了文章很大的篇幅），所以也推荐直接看原文。如果想了解更多关于状态机的实现，可以多多评论，我试着写一发💁‍
+翻译自www.promisejs.org ， [原文链接](https://www.promisejs.org/implementing/)。
+
+---
 ## 前言
 
 本文最初是作为[Stack Overflow](http://stackoverflow.com/questions/23772801/basic-javascript-promise-implementation-attempt/23785244#23785244)上的一个答案编写的。希望通过了解如何在JavaScript中实现Promise，你可以更好地理解Promise的行为方式。
@@ -157,7 +159,7 @@ function doResolve(fn, onFulfilled, onRejected) {
 }
 ```
 
-## 构造（Constructing）
+## 构造 (Constructing)
 我们现在已经拥有了完整的内部的状态机，但是我们还没有提供一个调用resolve的方法或者观察方法。让我们从添加Promise的resolving方法开始。
 
 ```js

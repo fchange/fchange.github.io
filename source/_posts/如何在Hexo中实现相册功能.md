@@ -51,40 +51,63 @@ noDate: 'true'
 现在，我们就有一个相册页面了，接下来的问题是怎么批量加载那些照片。
 
 ## 脚本
-大家可以集思广益，我是用的是一个[教程](https://www.cnblogs.com/xljzlw/p/5137622.html)中的脚本改的，与其思路一致。
+大家可以集思广益，使用别的方式。（毕竟我不是专业的前端）
 在博客主文件夹下新建`tool.js`：
-``` javaScript
+```js
 "use strict";
-    const fs = require("fs");
-    const sizeOf = require('image-size');
-    const path = "./source/Images";
-    const outputfile = "./source/Images/output.json";
-    var dimensions;
 
-    fs.readdir(path, function (err, files) {
-        if (err) {
-            return;
-        }
-        let arr = [];
-        (function iterator(index) {
-            if (index == files.length) {
-                fs.writeFile(outputfile, JSON.stringify(arr, null, "\t"));
-                return;
-            }
+const fs = require("fs");
+const sizeOf = require('image-size');
+const path = "./source/Images";
+const outputfile = "./source/Images/output.json";
+var dimensions;
 
-            fs.stat(path + "/" + files[index], function (err, stats) {
-                if (err) {
-                    return;
-                }
+let arr = [];
+function tryToSave() {
+    arr = JSON.stringify(arr, null, "\t")
+    fs.writeFile(outputfile, arr, e => {
+        if(e) console.log(e);
+        else console.log("SAVE OVER");
+    })
+}
+function tryToReadDir() {  
+    fs.readdir(path, (err, files) => {
+        if (err) return;
+
+        files.forEach((fileName) => {
+            fs.stat(path + "/" + fileName, function (err, stats) {
+                if (err) return; 
+
                 if (stats.isFile()) {
-                    dimensions = sizeOf(path + "/" + files[index]);
-                    console.log(dimensions.width, dimensions.height);
-                    arr.push(dimensions.width + '.' + dimensions.height + ' ' + files[index]);
+                    dimensions = sizeOf(path + "/" + fileName);
+                    // console.log(dimensions.width, dimensions.height);
+                    arr.push(dimensions.width 
+                        + '.' + dimensions.height 
+                        + ' ' + fileName);
+                    count();
                 }
-                iterator(index + 1);
             })
-        }(0));
+        })
+
+        var countNum = 0;
+        var count = function() {
+            countNum++;
+            if(countNum === files.length) {
+                tryToSave();
+            }
+        }
     });
+}
+
+fs.exists(outputfile, function (exists) {
+    if(exists) 
+        fs.unlink(outputfile, e => {
+            console.log("remove file done!！! exception: " + e)
+            tryToReadDir();
+        }) 
+    else 
+        tryToReadDir();
+});
 ```
 每次在相册中更新照片后都要在控制台`node tool.js`一下，以便更新数据。
 它会生成一个json文件，带有每张照片的长宽及文件名。
@@ -168,7 +191,7 @@ js文件也可以放在Images文件夹下，只需要将相册页面加载的`<s
 
 ## 自动构建
 我是使用过[travis-ci](https://www.travis-ci.org/)自动构建的。（用过以后表示很鸡肋）
-如果你也使用了这个的话，在`travis.yml`中的`script`或者`before_script`,添加一句`node tool.js`,就可以将相册脚本也加入自动构建：
+如果你也使用了这个的话，在`travis.yml`中的`script`或者`before_script`,添加一句`node tool.js`,就可以将相册脚本也加入自动构建（需要注意的是必须在`hexo g`前执行）：
 
 ``` javaScript
 script:

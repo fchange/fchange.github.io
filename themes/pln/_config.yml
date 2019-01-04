@@ -5,14 +5,14 @@ menu:
 logo: Fchange
 
 more:
-  Friends: /links/
+  RSS: /atom.xml
+  友情链接: /links/
   # 微博: http://weibo.com/XXX
   # 知乎: https://www.zhihu.com/people/XXX
   # rss: /rss2.xml
-  Photos: /photo/
+  相册: /photo/
   Github: https://github.com/fchange/
-  About: /about/
-  RSS: /atom.xml
+  关于我: /about/
 
 show_toc_bool: true
 
@@ -34,10 +34,10 @@ busuanzi:
   enable: false
 
 
-excerpt_num: 6
+excerpt_num: 120
 
 footer_info: © Fchange 2016-2018
 
 about:
-  title: #Theme Pln
-  link: #https://github.com/gaoryrt/hexo-theme-pln
+  title: Theme Pln
+  link: https://github.com/gaoryrt/hexo-theme-pln

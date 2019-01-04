@@ -1,10 +1,8 @@
 ---
-title: 12个互联网最好的 About Us 页实践 （翻译）
+title: 「翻译」12个互联网最好的 About Us 页实践 
 date: 2018/10/12
 categories: 
  - 翻译集
-tags: 
-- 翻译
 ---
 
 翻译自www.blogtyrant.com ， [原文链接](https://www.blogtyrant.com/best-about-us-pages/)。

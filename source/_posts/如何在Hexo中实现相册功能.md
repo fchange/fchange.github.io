@@ -2,10 +2,10 @@
 title: 如何在Hexo中实现自适应响应式相册功能
 date: 2018/02/18
 thumbnail: http://o7o8kqz7a.bkt.clouddn.com/image/180224/iKhLJDE8mH.png
+categories: 
+ - 教程
 tags: 
 - Hexo
-- 教程
-- 随笔
 ---
 
 用最清晰简洁的方法整合一个响应式相册
@@ -46,6 +46,7 @@ noDate: 'true'
 <div class="ImageGrid"></div>
 
 <script src="/js/photo.js"></script>
+
 ```
 这里使用`noDate`来自定义一些HTML数据，加载一些JS文件(minigrid在bootcss中还是1.*的版本，只好使用它推荐的cdn了)，其中`photo.js`是自定义的，用来加载照片，稍后提到。
 现在，我们就有一个相册页面了，接下来的问题是怎么批量加载那些照片。
@@ -53,7 +54,7 @@ noDate: 'true'
 ## 脚本
 大家可以集思广益，使用别的方式。（毕竟我不是专业的前端）
 在博客主文件夹下新建`tool.js`：
-```js
+```javascript
 "use strict";
 
 const fs = require("fs");
@@ -112,8 +113,9 @@ fs.exists(outputfile, function (exists) {
 每次在相册中更新照片后都要在控制台`node tool.js`一下，以便更新数据。
 它会生成一个json文件，带有每张照片的长宽及文件名。
 需要它的宽高是因为我们需要它满足瀑布流样式。
-output.json样式类似于：
-``` javasScript
+`output.json`样式类似于：
+
+``` json
 [
     "3120.4160 发票.jpg",
     "516.516 头像.jpg",

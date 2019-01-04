@@ -1,10 +1,9 @@
 ---
-title: 实现一个ES6中的Promise（翻译）
+title: 「翻译」实现一个ES6中的Promise
 date: 2018/11/17
 categories: 
  - 翻译集
 tags: 
- - 翻译 
  - javaScript
 ---
 

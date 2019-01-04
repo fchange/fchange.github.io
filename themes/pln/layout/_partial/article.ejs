@@ -49,7 +49,7 @@
       <%= __("site_visitor") %>:&nbsp;<span id="busuanzi_value_site_uv"></span>
     </div>
   <% } else if (theme.valine && theme.valine.enable && theme.valine.visitor) {%>
-    <div class="center leancloud-visitors" id="<%= item.title %>" >
+    <div class="center leancloud-visitors" id="<%= url_for(item.path) %>" >
       <%= __("page_read") %>:&nbsp;<span class="leancloud-visitors-count"></span>
     </div>
 </span>

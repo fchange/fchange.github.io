@@ -6,7 +6,6 @@
 @import "code";
 @import "animation";
 @import "toc";
-@import "image";
 $background: #fdfefe;
 $theme: #2570a1;
 $para: #444;
@@ -225,12 +224,12 @@ blockquote {
     font-style: italic;
     padding: 0;
     padding-left: 3rem;
-    /* border: 0; */
+    border: 0;
     p {
         color: #1a1a1a;
         text-indent: 0;
         line-height: 1.6;
-        font-size: $small;
+        font-size: $mid;
     }
 }
 
@@ -264,13 +263,6 @@ img {
 }
 
 .busuanzi {
-    font-size: $small;
-    line-height: $small;
-    margin: 30px 0;
-    color: #CDD2D4;
-}
-
-.leancloud-visitors {
     font-size: $small;
     line-height: $small;
     margin: 30px 0;

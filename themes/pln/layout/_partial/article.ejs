@@ -39,22 +39,13 @@
     <%- item.content %>
 
   </article>
-  <% if (theme.busuanzi && theme.busuanzi.enable) { %>
-    </script>
-      <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-    </script>
-    <div class="busuanzi center">
-      <%= __("page_read") %>:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
-      <%= __("site_read") %>:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
-      <%= __("site_visitor") %>:&nbsp;<span id="busuanzi_value_site_uv"></span>
-    </div>
-  <% } else if (theme.valine && theme.valine.enable && theme.valine.visitor) {%>
-    <div class="center leancloud-visitors" id="<%= url_for(item.path) %>" >
-      <%= __("page_read") %>:&nbsp;<span class="leancloud-visitors-count"></span>
-    </div>
-  <% } %>
-  </span>
-  </span>
-  
+  </script>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    <%= __("page_read") %>:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    <%= __("site_read") %>:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    <%= __("site_visitor") %>:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
 <% } %>
 <%- partial('post/comment') %>

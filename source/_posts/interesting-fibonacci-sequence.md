@@ -61,7 +61,7 @@ class Solution {
 
 查阅wikipedia  [https://zh.wikipedia.org/wiki/斐波那契数列](https://zh.wikipedia.org/wiki/斐波那契数列), 找到了我想要的答案:
 
-![篇幅较长，所以使用截图展示]((/blogimg/1561951531908.png)
+![篇幅较长，所以使用截图展示](/blogimg/1561951531908.png)
 
 这一套花哨的操作，只用到了高中数学的知识。成功算出了 $a_n$ 的表达式。
 

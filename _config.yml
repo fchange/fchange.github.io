@@ -95,6 +95,7 @@ theme: pln
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git   
-  repo: git@github.com:fchange/fchange.github.io.git
+  repo: https://github.com/fchange/fchange.github.io
   branch: master
+  token: 480558fc64d6c587b8178fadd3120ad77fcc9c89
   # message: [message]  #leave this blank

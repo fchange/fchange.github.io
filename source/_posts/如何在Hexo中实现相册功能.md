@@ -26,7 +26,6 @@ tags:
 
 ``` javaScript
     post_asset_folder: true
-
 ```
 
 然后就可以在文件夹`source`下新建一个相册文件夹`Images`,将照片放入这个文件夹

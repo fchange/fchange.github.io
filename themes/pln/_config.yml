@@ -26,7 +26,7 @@ valine:
   appId: EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz #your leancloud appId
   appKey: 7oXQjRGMPLzwU8KFGgx6Nvdr #your leancloud appKey
   guest_info: nick,mail,link #valine comment header info
-  placeholder: 请发布你的评论：D # valine comment input placeholder(like: Please leave your footprints )
+  placeholder: 请发布你的评论:D # valine comment input placeholder(like: Please leave your footprints )
   avatar: mm # gravatar style https://valine.js.org/avatar
   pageSize: 10 # comment list page size
   verify: false # valine verify code (true/false)
@@ -36,4 +36,4 @@ valine:
 
 excerpt_num: 120
 
-footer_info: © Fchange 2016-2019
+footer_info: © Fchange 2016-2020

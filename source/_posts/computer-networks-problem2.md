@@ -16,6 +16,7 @@ tags:
 计算函数f（t）=t（0≤t≤1）的傅里叶系数。
 
 **答：** 
+
 $$
 \begin{equation*}
 \begin{split}
@@ -26,7 +27,9 @@ a _ { n } &= \frac { 2 } { P } \int _ { t _ { 0 } } ^ { t _ { 0 } + P } f ( t ) 
 \end{split}
 \end{equation*}
 $$
+
 同理：
+
 $$
 \begin{equation*}
 \begin{split}

@@ -1,6 +1,7 @@
 # hexo-theme-pln
 a plain, text-friendly Hexo theme
-一个纯文字友好的Hexo主题  
+一个纯文字友好的Hexo主题
+
 ![index](/screenShots/ver1.0-index.jpg)
 ![tags](/screenShots/ver1.0-tags.jpg)
 ![article](/screenShots/ver1.0-article.jpg)
@@ -14,7 +15,7 @@ Execute the following command under your `hexo` folder.
 git clone https://github.com/gaoryrt/hexo-theme-pln.git themes/pln
 ```
 
-Then find `theme` in `hexo/_config.yml`, make it looks like this: `theme: pln` 
+Then find `theme` in `hexo/_config.yml`, make it looks like this: `theme: pln`
 
 # Update
 Execute the following command to update Pln.
@@ -32,13 +33,24 @@ rm -rf pln
 ```
 ***
 # After install
-**You should modify `hexo/themes/pln/_config.yml` file before deploy.    
-Always add `subtitle: ` to your `hexo/_config.yml` file to avoid bug**  
-请务必修改以上内容。  
+
+请务必修改以下内容。
 
 
-Here's what it looks like/means:  
+**Always add `subtitle: ` to your `hexo/_config.yml` file to avoid bug.**
+
+```yml
+subtitle: 'I am subtitle.'
+
+...
+If your site is put in a subdirectory, set root as '/<your subdirectory>/', for example: /blog/.
+root: ''
 ```
+
+**You should modify `hexo/themes/pln/_config.yml` file before deploy.**
+
+
+```yaml
 menu:
   main: /
   archives: /archives
@@ -59,12 +71,23 @@ excerpt_num: **number of auto excerpt words**
 
 footer_info: **black words fixed on the right end**
 ```
+
 ***
+
 # Issues
-[Issues](https://github.com/gaoryrt/hexo-theme-pln/issues) are always welcome.  
-欢迎您对本项目提供和意见和建议。  
+[Issues](https://github.com/gaoryrt/hexo-theme-pln/issues) are always welcome.
+
+欢迎您对本项目提供和意见和建议。
+
 (请直接提issue，或在[微博](http://weibo.com/R1T1AN)上私信，一般回复时间不超过12小时)
+
+# FAQ
+- [启用搜索功能](https://github.com/gaoryrt/hexo-theme-pln/issues/9#issuecomment-242401562)
+- [启用 Latex](https://github.com/gaoryrt/hexo-theme-pln/issues/33)
+- [只有分类没有 tag 吗](https://github.com/gaoryrt/hexo-theme-pln/issues/35)
+
 ***
+
 # Changelog
 - `2016-04-12`: init
 - `2016-04-13`: disqus showing same comments bug fix
@@ -96,7 +119,14 @@ footer_info: **black words fixed on the right end**
 - `2017-02-04`: dropdown-content css upgrade
 - `2017-08-27`: remove wx_share.png; remove fontawesome, use inline SVG
 - `2018-02-03`: support TOC, finally
-- `2018-05-04`: optional TOC; Fixed #27
+- `2018-05-04`: optional TOC; Fixed [#27](https://github.com/gaoryrt/hexo-theme-pln/issues/27)
+- `2020-01-04`: support deploy site to server subdirectory by [shuiRong](https://github.com/shuiRong)
+- `2020-01-04`: fix [#33](https://github.com/gaoryrt/hexo-theme-pln/issues/33) and [#36](https://github.com/gaoryrt/hexo-theme-pln/issues/36])
 
 # license
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+
+# donate
+如果你喜欢的话可以 star 或者捐助作者～
+[![](https://cdn.buymeacoffee.com/buttons/default-white.png)](https://www.buymeacoffee.com/pT2Y5iN)
+![](https://jungle.fm/assets/donate.jpg)

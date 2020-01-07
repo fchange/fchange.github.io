@@ -37,3 +37,5 @@ valine:
 excerpt_num: 120
 
 footer_info: © Fchange 2016-2020
+
+latex: true

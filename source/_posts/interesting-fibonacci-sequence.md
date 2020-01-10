@@ -67,7 +67,7 @@ class Solution {
 
 对着表达式：
 
-![表达式](https://wikimedia.org/api/rest_v1/media/math/render/svg/bdd45861380dd60d182655318702aea70439dff8)
+![表达式](/blogimg/fib.svg)
 
 现在再看其源码便能看出端倪。
 ```java

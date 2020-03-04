@@ -51,7 +51,7 @@ def generated():
 
 随机生成X的二维坐标, 并使用一个较为复杂的function对X进行二分类，生成对应的y, ($y \subseteq \left \{ 0, 1 \right \}$)。
 
-### 展示数据
+### 展示分布
 
 ```python
 def show(title, X, y):
@@ -68,7 +68,7 @@ show("All Data", X, y)
 
 ![](/blogimg/all_data.png)
 
-通过展示数据，我们可以看出，刚刚的复杂function，是用重复的菱形结构将数据划分成两个分类。
+通过展示数据分布，我们可以看出，刚刚的复杂function，是用重复的菱形结构将数据划分成两个分类。
 
 ### 切分训练数据和测试数据
 
@@ -130,9 +130,28 @@ print("Deep modal score: ", clf.score(X_test, y_test))
 >
 > 实际上，在深度神经网络中，一个隐含层包含的神经元也不少了，比如 AlexNet 和 VGG-16 最后全连接层的 4096 个神经元。在 deep 的同时，fat 也不是说不需要，只是没有像只用一层隐含层那么极端，每个隐含层神经元的个数也是我们需要调节的超参数之一。
 
+## 实践番外
+
+貌似这个场景更适合使用KNN模型，所以尝试上代码：
+
+```python
+from sklearn.neighbors import KNeighborsClassifier
+...
+# KNN模型
+clf = KNeighborsClassifier(n_neighbors=5)
+clf.fit(X_train, y_train)
+show("KNN modal", X_test, clf.predict(X_test))
+print("KNN modal score: ", clf.score(X_test, y_test))
+# KNN modal score:  0.975
+```
+
+![](/blogimg/KNN_modal.png)
+
+不得不说，KNN还是强的，效果显著。0.97的正确率足以艳压群芳。
+
 ## 推荐
 
-[李宏毅机器学习](https://www.bilibili.com/video/av10590361/?p=22) 优秀的宝可梦训练师，幽默的教学风格
+[李宏毅机器学习](https://www.bilibili.com/video/av10590361/?p=22) 【优秀的宝可梦训练师，幽默的教学风格】
 
 [Universal approximation theorem](https://en.wikipedia.org/wiki/Universal_approximation_theorem)
 

@@ -24,8 +24,8 @@ date: 2018-10-29
 
 ## 有趣
 
-[beyond the void](https://www.byvoid.com/) 博主热衷于旅行，博客分享了很多欧洲游行的故事。
-[pluskid](http://freemind.pluskid.org/) 博主很“现充”，多才多艺，兴趣广泛。
+- [beyond the void](https://www.byvoid.com/) 博主热衷于旅行，博客分享了很多欧洲游行的故事。
+- [pluskid](http://freemind.pluskid.org/) 博主很“现充”，多才多艺，兴趣广泛。
 
 ## 有颜
 

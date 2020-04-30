@@ -2,23 +2,25 @@
 title: About Me
 date: 2018-01-08 11:29:47
 ---
-## 自我介绍
+## Introduce
 我，是个喜欢捣鼓喜欢探索的软件工程师，也是个很任性很有活力又很*蠢*的年轻人。希望这个博客能记录下我生活中那些有趣的事情。
 
 
 这是一个基于`GitHub`和`Hexo`的静态Blog，使用`Markdown`格式。
 
-## 什么是 Markdown
+## Markdown
 Markdown 是一种方便记忆、书写的纯文本标记语言，用户可以使用这些标记符号以最小的输入代价生成极富表现力的文档：譬如您正在阅读的这份文档。它使用简单的符号标记不同的标题，分割不同的段落。
 
-## 什么是 Github
+## Github
 作为开源代码库以及版本控制系统，Github拥有140多万开发者用户。随着越来越多的应用程序转移到了云上，Github已经成为了管理软件开发以及发现已有代码的首选方法。~~当然这是墙外产物，不会科学上网的话也可以选择国内类似平台，这里就不一一举例了。~~
 
-## 联系方式 - Contact
+## Contact
 姓名/Name： 方程
+
 技术博客/Tech Blog: [fchange](https://blog.csdn.net/fcfc0724/)
+
 邮箱/Mail ： fchangenow@163.com
+
 母校/Old School： 江西农业大学
+
 联系地址/Address ： 北京
-
-

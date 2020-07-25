@@ -132,7 +132,7 @@ print("Deep modal score: ", clf.score(X_test, y_test))
 
 ## 实践番外
 
-貌似这个场景更适合使用KNN模型，所以尝试上代码：
+貌似这个场景更适合使用KNN模型，所以尝试上代码：(其实这是不合适的,毕竟KNN是适用于少量数据集的预测)
 
 ```python
 from sklearn.neighbors import KNeighborsClassifier

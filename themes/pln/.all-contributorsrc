@@ -1,0 +1,61 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 70,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "xCss",
+      "name": "Nine",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/10877162?v=4",
+      "profile": "http://ioliu.cn",
+      "contributions": [
+        "platform",
+        "tool"
+      ]
+    },
+    {
+      "login": "willmasters",
+      "name": "Will Masters",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/743296?v=4",
+      "profile": "https://github.com/willmasters",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "shuiRong",
+      "name": "林水溶",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/16076993?v=4",
+      "profile": "https://linshuirong.cn",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "aloisdg",
+      "name": "Alois",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3449303?v=4",
+      "profile": "http://aloisdg.github.io/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "gaoryrt",
+      "name": "gaoryrt",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5306513?v=4",
+      "profile": "https://gaoryrt.com",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "hexo-theme-pln",
+  "projectOwner": "gaoryrt",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": false
+}

@@ -2,35 +2,36 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-[🇨🇳 中文](/README.zh.md) [🖼 screenshots](/screenShots/index.md)
+[🇬🇧 English](/README.md) [🖼 截图](/screenShots/index.md)
 
-A plain, text-friendly Hexo theme
+一个纯文字友好的Hexo主题
 
-## Install
+## 安装
 1. `git clone https://github.com/gaoryrt/hexo-theme-pln.git themes/pln`
-2. Modify your [hexo configuration](https://hexo.io/docs/configuration.html), [change `theme`](https://hexo.io/docs/configuration.html#Extensions) to `pln`.
+2. 修改 [hexo 配置文件](https://hexo.io/zh-cn/docs/configuration.html#%E6%89%A9%E5%B1%95)，[指定主题](https://hexo.io/docs/configuration.html#Extensions)为 `pln`
 
-## Update
+## 更新
 `cd themes/pln && git pull`
 
-## Uninstall
+## 卸载
 `cd themes && rm -rf pln`
 
-## Configuration
-Modify your [`theme/pln/_config.yml`](https://github.com/gaoryrt/hexo-theme-pln/blob/master/_config.yml) file.
+## 配置
+修改 [`theme/pln/_config.yml`](https://github.com/gaoryrt/hexo-theme-pln/blob/master/_config.yml) 文件即可
 
-## Got a question?
-[Issues](https://github.com/gaoryrt/hexo-theme-pln/issues) are always welcomed.
+## 有问题吗？
+欢迎提交 [Issues](https://github.com/gaoryrt/hexo-theme-pln/issues)
 
-### How to enable site-searching
-Simply use [hexo-generator-search](https://github.com/wzpan/hexo-generator-search). Or change [`theme/pln/layout/_partial/search.ejs`](https://github.com/gaoryrt/hexo-theme-pln/blob/master/layout/_partial/search.ejs) file using [hexo search helper](https://hexo.io/docs/helpers.html#search-form)
-### How to enable Latex
+### 如何启用搜索
+参考使用 [hexo-generator-search](https://github.com/wzpan/hexo-generator-search)，当然你也可以使用 [hexo 自带的 helper](https://hexo.io/zh-cn/docs/helpers.html#search-form) 修改 [`theme/pln/layout/_partial/search.ejs`](https://github.com/gaoryrt/hexo-theme-pln/blob/master/layout/_partial/search.ejs) 文件
+
+### 如何启用 Latex
 ```
 brew install Pandoc
 npm uninstall hexo-renderer-marked --save
 npm install hexo-renderer-pandoc --save
 ```
-then enable it in [theme configuration](https://github.com/gaoryrt/hexo-theme-pln/blob/beecf303914f4b4a76e22026bcc8c3b15c47b6fa/_config.yml#L17).
+然后在[配置中启用](https://github.com/gaoryrt/hexo-theme-pln/blob/beecf303914f4b4a76e22026bcc8c3b15c47b6fa/_config.yml#L17)即可
 
 ## License
 MIT

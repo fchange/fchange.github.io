@@ -18,7 +18,7 @@ about:
   title: Theme Pln
   link: https://github.com/gaoryrt/hexo-theme-pln
 
-show_toc_bool: true
+toc: true
 
 # If you want to use valine,you should get the appId and appKey form https://leancloud.cn ,more setting please see https://valine.js.org
 valine:

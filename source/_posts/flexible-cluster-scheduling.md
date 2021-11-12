@@ -32,7 +32,9 @@ Apache Dubbo 作为一款可拓展性极高的 RPC 框架，支持高度自定�
 
 最终成绩定位在B榜17名。
 
-![证书](/blogimg/2021/zhengshu.png)
+证书如下：
+
+![](/blogimg/2021/zhengshu.png)
 
 # 解题思路和方向
 ## 搭建环境
@@ -56,8 +58,6 @@ Apache Dubbo 作为一款可拓展性极高的 RPC 框架，支持高度自定�
 ![](/blogimg/2021/concurrentBaseTimeCost.png)
 
 这张图是模拟的不同index值时，rtt跟并发量值的关系（每个并发量值重复十次）。
-
-// 所以初步的目标时找到一个阈值t1，能使得我们可以抛弃掉所有耗时会超过t1的任务，通俗的讲就是保量不保质。（当然生产环境可不兴这么搞）
 
 当然，耗时是随时变化的，但是也是平滑变化的（这里也就假设了并发量在短时间内不会变化得太明显）。
 
@@ -241,7 +241,7 @@ private static void endCount(EwmaRpcStatus status, long elapsed, boolean succeed
 - [一不小心，用力过猛，成了榜一大哥...](https://www.whywhy.vip/archives/128)
 - [指数加权移动平均法（EWMA）](https://www.cnblogs.com/jiangxinyang/p/9705198.html)
 - [add PeakEwmaLoadBalance](https://github.com/apache/dubbo-spi-extensions/pull/68)
-- [代码（代码未整理，最终代码在分支master中）] (https://code.aliyun.com/fangcheng0724/pullbased-cluster)
+- [代码（未整理，代码最终版本在分支master中）](https://code.aliyun.com/fangcheng0724/pullbased-cluster)
 
 
 

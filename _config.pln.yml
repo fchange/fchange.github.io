@@ -1,0 +1,32 @@
+logo: Fchange
+
+more:
+  RSS: /atom.xml
+  友情链接: /links/
+  相册: /photo/
+  Github: https://github.com/fchange/
+  关于我: /about/
+
+footer_info: © Fchange 2016-2023
+about: # about link at right foot
+  title: Theme Pln
+  link: https://github.com/gaoryrt/hexo-theme-pln
+
+excerpt_num: 120
+
+toc: true
+
+latex: true
+
+# If you want to use valine,you should get the appId and appKey form https://leancloud.cn ,more setting please see https://valine.js.org
+valine:
+  enable: true # !!if you want use valine comment system,please set enable: true
+  appId: EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz #your leancloud appId
+  appKey: 7oXQjRGMPLzwU8KFGgx6Nvdr #your leancloud appKey
+  guest_info: nick,mail,link #valine comment header info
+  placeholder: 请发布你的评论:D # valine comment input placeholder(like: Please leave your footprints )
+  avatar: mm # gravatar style https://valine.js.org/avatar
+  pageSize: 10 # comment list page size
+  verify: false # valine verify code (true/false)
+  notify: false # valine mail notify (true/false)
+  lang: zh-cn

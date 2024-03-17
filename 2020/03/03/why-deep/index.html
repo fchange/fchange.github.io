@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  <meta name="referrer" content="unsafe-url">
+  
+  <title>为什么要选择「深度」神经网络</title>
+  <meta name="author" content="Fchange">
+  <meta name="description" content="life is like a dream">
+  
+  
+  <meta property="og:title" content="为什么要选择「深度」神经网络"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="Fchange"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="Fchange" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="main-ctnr">
+      <div class="behind">
+  <a href="/" class="back black-color">
+    <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+        <path d="M2 30 L30 2 M30 30 L2 2"></path>
+    </svg>
+  </a>
+  
+    <div class="description">
+      &nbsp;life is like a dream
+    </div>
+    
+</div>
+
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        为什么要选择「深度」神经网络
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      <time datetime="2020-03-02T16:00:00.000Z" itemprop="datePublished">
+  <svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2020-03-03
+</time>
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/随笔/">随笔</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/机器学习/">机器学习</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%84%9F%E7%9F%A5%E6%9C%BA"><span class="toc-text">感知机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#why-Deep"><span class="toc-text">why Deep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E8%BF%91%E4%BC%BC%E5%AE%9A%E7%90%86"><span class="toc-text">通用近似定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E5%AE%9E%E8%B7%B5"><span class="toc-text">尝试实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="toc-text">导入依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%B9%B6%E5%88%86%E7%B1%BB"><span class="toc-text">创建数据并分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%95%E7%A4%BA%E5%88%86%E5%B8%83"><span class="toc-text">展示分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E5%88%86%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E5%92%8C%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE"><span class="toc-text">切分训练数据和测试数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E2%80%9CDeep%E2%80%9D%E6%A8%A1%E5%9E%8B"><span class="toc-text">使用“Deep”模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E2%80%9Cfat%E2%80%9D%E6%A8%A1%E5%9E%8B"><span class="toc-text">使用“fat”模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E7%BB%93%E8%AE%BA"><span class="toc-text">实践结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E7%90%86%E7%9A%84%E8%A7%A3%E9%87%8A"><span class="toc-text">合理的解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E7%95%AA%E5%A4%96"><span class="toc-text">实践番外</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90"><span class="toc-text">推荐</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <h2 id="感知机"><a href="#感知机" class="headerlink" title="感知机"></a>感知机</h2><p><strong>感知器</strong>（英语：Perceptron）是Frank Rosenblatt在1957年就职于康奈尔航空实验室（Cornell Aeronautical Laboratory）时所发明的一种人工神经网络。它是一种二元线性分类器。</p>
+<p><strong>多层感知器</strong>（Multilayer Perceptron,缩写MLP）是感知器的推广。在模式识别的领域中算是标准监督学习算法，并在计算神经学及并行分布式处理领域中，持续成为被研究的课题。MLP已被证明是一种通用的函数近似方法，<strong>可以被用来拟合复杂的函数，或解决分类问题</strong>。</p>
+<h2 id="why-Deep"><a href="#why-Deep" class="headerlink" title="why Deep"></a>why Deep</h2><p>大家都在提 “深度神经网络”，那么，神经网络就一定是要“深度”（deep）的吗？我们常用的 Logistic regression 就是单个的感知器，没有多层，也能对简单数据进行很好的预测（当然它还需要选择不同的function set）。现在神经网络基本都是 deep 的，即包含多个隐含层。Why？</p>
+<h2 id="通用近似定理"><a href="#通用近似定理" class="headerlink" title="通用近似定理"></a>通用近似定理</h2><p>universality approximation theorem（通用近似定理）提出： 任何连续的函数 $f: \mathbb{R}^{N} \rightarrow \mathbb{R}^{M}$ 都可以用只有一个隐含层的神经网络表示。（隐含层神经元足够多）</p>
+<p><img src="/blogimg/MLP_with_only_one_hidden_layer.png"></p>
+<p>一个神经网络可以看成是一个从输入到输出的映射，那么既然仅含一个隐含层的神经网络可以表示任何连续的函数，为什么还要多个隐含层的神经网络？</p>
+<h2 id="尝试实践"><a href="#尝试实践" class="headerlink" title="尝试实践"></a>尝试实践</h2><p>实践出真知，为何不尝试一下，自己创建一些数据，验证一下是不是“深度”模型效果更好。</p>
+<h3 id="导入依赖"><a href="#导入依赖" class="headerlink" title="导入依赖"></a>导入依赖</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.neural_network <span class="keyword">import</span> MLPClassifier</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建数据并分类"><a href="#创建数据并分类" class="headerlink" title="创建数据并分类"></a>创建数据并分类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">generated</span>():</span><br><span class="line">    A = <span class="number">20</span></span><br><span class="line">    x1 = np.random.randint(<span class="number">100</span>, size=<span class="number">10000</span>)</span><br><span class="line">    x2 = np.random.randint(<span class="number">100</span>, size=<span class="number">10000</span>)</span><br><span class="line">    y = ((x1 % (<span class="number">2</span> * A) - A) ** <span class="number">2</span> &lt;= (x2 % (<span class="number">2</span> * A) - A) ** <span class="number">2</span>).astype(<span class="string">&#x27;int&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> np.concatenate((x1.reshape(x1.shape[<span class="number">0</span>], <span class="number">1</span>), x2.reshape(x2.shape[<span class="number">0</span>], <span class="number">1</span>)), axis=<span class="number">1</span>), y</span><br></pre></td></tr></table></figure>
+
+<p>随机生成X的二维坐标, 并使用一个较为复杂的function对X进行二分类，生成对应的y, ($y \subseteq \left { 0, 1 \right }$)。</p>
+<h3 id="展示分布"><a href="#展示分布" class="headerlink" title="展示分布"></a>展示分布</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">title, X, y</span>):</span><br><span class="line">    fig, ax = plt.subplots()</span><br><span class="line">    ax.set_title(title)</span><br><span class="line">    ax.scatter(np.squeeze(X[:, <span class="number">0</span>]), np.squeeze(X[:, <span class="number">1</span>]), c=y)</span><br><span class="line">    ax.grid(<span class="literal">True</span>)</span><br><span class="line">    ax.legend()</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">X, y = generated()</span><br><span class="line">show(<span class="string">&quot;All Data&quot;</span>, X, y)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/blogimg/all_data.png"></p>
+<p>通过展示数据分布，我们可以看出，刚刚的复杂function，是用重复的菱形结构将数据划分成两个分类。</p>
+<h3 id="切分训练数据和测试数据"><a href="#切分训练数据和测试数据" class="headerlink" title="切分训练数据和测试数据"></a>切分训练数据和测试数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.2</span>, random_state=<span class="number">42</span>)</span><br><span class="line">show(<span class="string">&quot;Training data&quot;</span>, X_train, y_train)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/blogimg/training_data.png"></p>
+<p>使用各种工具方法，编程成本急剧下降。</p>
+<h3 id="使用“Deep”模型"><a href="#使用“Deep”模型" class="headerlink" title="使用“Deep”模型"></a>使用“Deep”模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deep模型</span></span><br><span class="line">clf = MLPClassifier(hidden_layer_sizes=(<span class="number">40</span>,<span class="number">40</span>,<span class="number">40</span>))</span><br><span class="line">clf.fit(X_train, y_train)</span><br><span class="line">show(<span class="string">&quot;Deep modal&quot;</span>, X_test, clf.predict(X_test))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Deep modal score: &quot;</span>, clf.score(X_test, y_test))</span><br><span class="line"><span class="comment"># Deep modal score:  0.861</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/blogimg/deep_modal.png"></p>
+<p>使用<strong>MLPClassifier</strong>，并配置对应的隐藏层size，其他参数如<strong>activation</strong>， <strong>alpha</strong>均使用默认。</p>
+<p>训练完完毕后验证正确率，正确率0.86，通过图可以看出，这个模型预测的分类在边界选择上已经很接近正确答案了。</p>
+<h3 id="使用“fat”模型"><a href="#使用“fat”模型" class="headerlink" title="使用“fat”模型"></a>使用“fat”模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fat模型</span></span><br><span class="line">clf = MLPClassifier(hidden_layer_sizes=(<span class="number">1000</span>))</span><br><span class="line">clf.fit(X_train, y_train)</span><br><span class="line">show(<span class="string">&quot;Fat modal&quot;</span>, X_test, clf.predict(X_test))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Deep modal score: &quot;</span>, clf.score(X_test, y_test))</span><br><span class="line"><span class="comment"># Deep modal score:  0.693</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/blogimg/fat_modal.png"></p>
+<p>同样使用<strong>MLPClassifier</strong>，并配置对应的隐藏层size，其他参数如<strong>activation</strong>， <strong>alpha</strong>均使用默认。<br>正确率0.69，说实话比我本来预计的分数要高一些。但是通过图就可以看出，这个模型，分明就是在<strong>瞎分类</strong>。</p>
+<h2 id="实践结论"><a href="#实践结论" class="headerlink" title="实践结论"></a>实践结论</h2><p>只有一个隐藏层的感知机模型，即使占用1000个感知机，也无法fit到只复杂了一点的function。在这个场景下，他的效果远远不如只有三个隐藏层，每层40个感知机的模型。</p>
+<h2 id="合理的解释"><a href="#合理的解释" class="headerlink" title="合理的解释"></a>合理的解释</h2><p>李宏毅教授在他的机器学习视频中，提出一种叫做 Modularization（模块化）的解释。在多层神经网络中，第一个隐含层学习到的特征会是最简单的，之后每个隐含层使用前一层得到的特征进行学习，所学到的特征变得越来越复杂。 </p>
+<blockquote>
+<p>在比较深度神经网络和仅含一个隐含层神经网络的效果时，需要控制两个网络的 trainable 参数数量相同，不然没有可比性。李宏毅教授在他的机器学习视频中举例，相同参数数量下，deep 表现更好；这也就意味着，达到相同的效果，deep 的参数会更少。</p>
+<p>不否认，理论上仅含一个隐含层的神经网络完全可以实现深度神经网络的效果，但是训练难度要大于深度神经网络。</p>
+<p>实际上，在深度神经网络中，一个隐含层包含的神经元也不少了，比如 AlexNet 和 VGG-16 最后全连接层的 4096 个神经元。在 deep 的同时，fat 也不是说不需要，只是没有像只用一层隐含层那么极端，每个隐含层神经元的个数也是我们需要调节的超参数之一。</p>
+</blockquote>
+<h2 id="实践番外"><a href="#实践番外" class="headerlink" title="实践番外"></a>实践番外</h2><p>貌似这个场景更适合使用KNN模型，所以尝试上代码：(其实这是不合适的,毕竟KNN是适用于少量数据集的预测)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line">...</span><br><span class="line"><span class="comment"># KNN模型</span></span><br><span class="line">clf = KNeighborsClassifier(n_neighbors=<span class="number">5</span>)</span><br><span class="line">clf.fit(X_train, y_train)</span><br><span class="line">show(<span class="string">&quot;KNN modal&quot;</span>, X_test, clf.predict(X_test))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;KNN modal score: &quot;</span>, clf.score(X_test, y_test))</span><br><span class="line"><span class="comment"># KNN modal score:  0.975</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/blogimg/KNN_modal.png"></p>
+<p>不得不说，KNN还是强的，效果显著。0.97的正确率足以艳压群芳。</p>
+<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av10590361/?p=22">李宏毅机器学习</a> 【优秀的宝可梦训练师，幽默的教学风格】</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Universal_approximation_theorem">Universal approximation theorem</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wuliytTaotao/p/9590633.html">【人工神经网络基础】为什么神经网络选择了“深度”？</a></p>
+
+
+  </article>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <div class="busuanzi center">
+    page PV:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    site PV:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    site UV:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <style>
+        .vcard .vimg{left:0;}
+        </style>
+        <div id="vcomment" class="vcomment" style="padding:0 6% 0 7%;"></div>
+        <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        <script>
+            var GUEST_INFO = ['nick','mail','link'];
+            var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+                return GUEST_INFO.indexOf(item) > -1
+            });
+            var notify = 'false' == true;
+            var verify = 'false' == true;
+            var valine = new Valine();
+            valine.init({
+                el: '.vcomment',
+                notify: notify,
+                verify: verify,
+                appId: "EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz",
+                appKey: "7oXQjRGMPLzwU8KFGgx6Nvdr",
+                placeholder: "请发布你的评论:D",
+                pageSize:'10',
+                avatar:'mm',
+                lang:'zh-cn'
+            })
+        </script>
+    
+
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Fchange 2016-2024
+    </div>
+    <div class="secondrow">
+        <a target="_blank" rel="noopener" href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

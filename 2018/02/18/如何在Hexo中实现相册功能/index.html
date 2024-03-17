@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  <meta name="referrer" content="unsafe-url">
+  
+  <title>如何在Hexo中实现自适应响应式相册功能</title>
+  <meta name="author" content="Fchange">
+  <meta name="description" content="life is like a dream">
+  
+  
+  <meta property="og:title" content="如何在Hexo中实现自适应响应式相册功能"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="Fchange"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="Fchange" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="main-ctnr">
+      <div class="behind">
+  <a href="/" class="back black-color">
+    <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+        <path d="M2 30 L30 2 M30 30 L2 2"></path>
+    </svg>
+  </a>
+  
+    <div class="description">
+      &nbsp;life is like a dream
+    </div>
+    
+</div>
+
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        如何在Hexo中实现自适应响应式相册功能
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      <time datetime="2018-02-17T16:00:00.000Z" itemprop="datePublished">
+  <svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2018-02-18
+</time>
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/教程/">教程</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Hexo/">Hexo</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="toc-text">技术选型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%86%8C%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-text">相册文件夹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%86%8C%E9%A1%B5%E9%9D%A2"><span class="toc-text">相册页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC"><span class="toc-text">脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#photo-js"><span class="toc-text">photo.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css"><span class="toc-text">css</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA"><span class="toc-text">自动构建</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <p>用最清晰简洁的方法整合一个响应式相册<br><img src="/blogimg/25.png" alt="示意图"></p>
+<span id="more"></span>
+<p><a href="https://fchange.github.io/photo/">效果</a></p>
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><ul>
+<li>由于我选用的主题使用了fancyBox作为图片弹出展示的框架，查看后表示很不错，能满足需要<br><a target="_blank" rel="noopener" href="http://fancyapps.com/fancybox/3/">http://fancyapps.com/fancybox/3/</a></li>
+<li>图片加载可能会太慢，所以还需要一个图片延迟加载插件 <a target="_blank" rel="noopener" href="https://github.com/tuupola/jquery_lazyload">Lazyload</a></li>
+<li>想使用瀑布流作为展示，粗略了解了下，便使用开源的<a target="_blank" rel="noopener" href="https://github.com/henriquea/minigrid">MiniGrid</a>，原因是它很小巧也刚好满足需求(ps:它的文档让我看了很捉急,不完善的文档是个大坑)</li>
+</ul>
+<h2 id="相册文件夹"><a href="#相册文件夹" class="headerlink" title="相册文件夹"></a>相册文件夹</h2><p>按照Hexo官方给的<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/asset-folders.html">建议</a></p>
+<blockquote>
+<p>资源（Asset）代表 source 文件夹中除了文章以外的所有文件，例如图片、CSS、JS 文件等。比方说，如果你的Hexo项目中只有少量图片，那最简单的方法就是将它们放在 source&#x2F;images 文件夹中。然后通过类似于 <code>![](/images/image.jpg)</code> 的方法访问它们。<br>对于那些想要更有规律地提供图片和其他资源以及想要将他们的资源分布在各个文章上的人来说，Hexo也提供了更组织化的方式来管理资源。这个稍微有些复杂但是管理资源非常方便的功能可以通过将 config.yml 文件中的 <code>post_asset_folder</code> 选项设为 <code>true</code> 来打开。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">post_asset_folder</span>: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>然后就可以在文件夹<code>source</code>下新建一个相册文件夹<code>Images</code>,将照片放入这个文件夹</p>
+<h2 id="相册页面"><a href="#相册页面" class="headerlink" title="相册页面"></a>相册页面</h2><p>我们需要一个相册页面以加载所有照片</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line">title: 相册</span><br><span class="line">noDate: &#x27;true&#x27;</span><br><span class="line">---</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/minigrid@3.1.1/dist/minigrid.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;ImageGrid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/js/photo.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这里使用<code>noDate</code>来自定义一些HTML数据，加载一些JS文件(minigrid在bootcss中还是1.*的版本，只好使用它推荐的cdn了)，其中<code>photo.js</code>是自定义的，用来加载照片，稍后提到。<br>现在，我们就有一个相册页面了，接下来的问题是怎么批量加载那些照片。</p>
+<h2 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h2><p>大家可以集思广益，使用别的方式。（毕竟我不是专业的前端）<br>在博客主文件夹下新建<code>tool.js</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&quot;use strict&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> sizeOf = <span class="built_in">require</span>(<span class="string">&#x27;image-size&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="string">&quot;./source/Images&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> outputfile = <span class="string">&quot;./source/Images/output.json&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> dimensions;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr = [];</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">tryToSave</span>(<span class="params"></span>) &#123;</span><br><span class="line">    arr = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(arr, <span class="literal">null</span>, <span class="string">&quot;\t&quot;</span>)</span><br><span class="line">    fs.<span class="title function_">writeFile</span>(outputfile, arr, <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(e) <span class="variable language_">console</span>.<span class="title function_">log</span>(e);</span><br><span class="line">        <span class="keyword">else</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;SAVE OVER&quot;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">tryToReadDir</span>(<span class="params"></span>) &#123;  </span><br><span class="line">    fs.<span class="title function_">readdir</span>(path, <span class="function">(<span class="params">err, files</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        files.<span class="title function_">forEach</span>(<span class="function">(<span class="params">fileName</span>) =&gt;</span> &#123;</span><br><span class="line">            fs.<span class="title function_">stat</span>(path + <span class="string">&quot;/&quot;</span> + fileName, <span class="keyword">function</span> (<span class="params">err, stats</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (err) <span class="keyword">return</span>; </span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (stats.<span class="title function_">isFile</span>()) &#123;</span><br><span class="line">                    dimensions = <span class="title function_">sizeOf</span>(path + <span class="string">&quot;/&quot;</span> + fileName);</span><br><span class="line">                    <span class="comment">// console.log(dimensions.width, dimensions.height);</span></span><br><span class="line">                    arr.<span class="title function_">push</span>(dimensions.<span class="property">width</span> </span><br><span class="line">                        + <span class="string">&#x27;.&#x27;</span> + dimensions.<span class="property">height</span> </span><br><span class="line">                        + <span class="string">&#x27; &#x27;</span> + fileName);</span><br><span class="line">                    <span class="title function_">count</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> countNum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">var</span> count = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            countNum++;</span><br><span class="line">            <span class="keyword">if</span>(countNum === files.<span class="property">length</span>) &#123;</span><br><span class="line">                <span class="title function_">tryToSave</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fs.<span class="title function_">exists</span>(outputfile, <span class="keyword">function</span> (<span class="params">exists</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(exists) </span><br><span class="line">        fs.<span class="title function_">unlink</span>(outputfile, <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;remove file done!！! exception: &quot;</span> + e)</span><br><span class="line">            <span class="title function_">tryToReadDir</span>();</span><br><span class="line">        &#125;) </span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="title function_">tryToReadDir</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>每次在相册中更新照片后都要在控制台<code>node tool.js</code>一下，以便更新数据。<br>它会生成一个json文件，带有每张照片的长宽及文件名。<br>需要它的宽高是因为我们需要它满足瀑布流样式。<br><code>output.json</code>样式类似于：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;3120.4160 发票.jpg&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;516.516 头像.jpg&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;402.180 录音.jpeg&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;720.758 截图1.jpg&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;720.978 截图2.jpg&quot;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="photo-js"><a href="#photo-js" class="headerlink" title="photo.js"></a>photo.js</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">photo =&#123;</span><br><span class="line">    <span class="attr">page</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">offset</span>: <span class="number">20</span>,</span><br><span class="line">    <span class="attr">init</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> that = <span class="variable language_">this</span>;</span><br><span class="line">        $.<span class="title function_">getJSON</span>(<span class="string">&quot;/photo/output.json&quot;</span>, <span class="keyword">function</span> (<span class="params">data</span>) &#123;</span><br><span class="line">            that.<span class="title function_">render</span>(that.<span class="property">page</span>, data);</span><br><span class="line">            <span class="comment">//that.scroll(data);</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="attr">render</span>: <span class="keyword">function</span> (<span class="params">page, data</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> begin = (page - <span class="number">1</span>) * <span class="variable language_">this</span>.<span class="property">offset</span>;</span><br><span class="line">        <span class="keyword">var</span> end = page * <span class="variable language_">this</span>.<span class="property">offset</span>;</span><br><span class="line">        <span class="keyword">if</span> (begin &gt;= data.<span class="property">length</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">var</span> html, li = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = begin; i &lt; end &amp;&amp; i &lt; data.<span class="property">length</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">            li += <span class="string">&#x27;&lt;div class=&quot;card&quot;&gt;&#x27;</span> +</span><br><span class="line">                    <span class="string">&#x27;&lt;div class=&quot;ImageInCard&quot;&gt;&#x27;</span> + </span><br><span class="line">                      <span class="string">&#x27;&lt;a data-fancybox=&quot;gallery&quot; href=&quot;/Images/&#x27;</span> + data[i] + <span class="string">&#x27;&quot;&gt;&#x27;</span> +</span><br><span class="line">                        <span class="string">&#x27;&lt;img src=&quot;/Images/&#x27;</span> + data[i] + <span class="string">&#x27;&quot;/&gt;&#x27;</span> +</span><br><span class="line">                      <span class="string">&#x27;&lt;/a&gt;&#x27;</span> +</span><br><span class="line">                    <span class="string">&#x27;&lt;/div&gt;&#x27;</span> +</span><br><span class="line">                    <span class="string">&#x27;&lt;div class=&quot;TextInCard&quot;&gt;&#x27;</span>+data[i].<span class="title function_">split</span>(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>]+<span class="string">&#x27;&lt;/div&gt;&#x27;</span> +</span><br><span class="line">                  <span class="string">&#x27;&lt;/div&gt;&#x27;</span> </span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $(<span class="string">&quot;.ImageGrid&quot;</span>).<span class="title function_">append</span>(li);</span><br><span class="line">        $(<span class="string">&quot;.ImageGrid&quot;</span>).<span class="title function_">lazyload</span>();</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">minigrid</span>();</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="attr">minigrid</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> grid = <span class="keyword">new</span> <span class="title class_">Minigrid</span>(&#123;</span><br><span class="line">            <span class="attr">container</span>: <span class="string">&#x27;.ImageGrid&#x27;</span>,</span><br><span class="line">            <span class="attr">item</span>: <span class="string">&#x27;.card&#x27;</span>,</span><br><span class="line">            <span class="attr">gutter</span>: <span class="number">12</span></span><br><span class="line">        &#125;);</span><br><span class="line">        grid.<span class="title function_">mount</span>();</span><br><span class="line">        $(<span class="variable language_">window</span>).<span class="title function_">resize</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">           grid.<span class="title function_">mount</span>();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">photo.<span class="title function_">init</span>();</span><br></pre></td></tr></table></figure>
+
+<p>js文件也可以放在Images文件夹下，只需要将相册页面加载的<code>&lt;script src=&quot;/js/photo.js&quot;&gt;&lt;/script&gt;</code>改成<code>&lt;script src=&quot;/Images/photo.js&quot;&gt;&lt;/script&gt;</code>即可。</p>
+<h2 id="css"><a href="#css" class="headerlink" title="css"></a>css</h2><p>这个样式是我自己写的，大家可以按照自己的想法自行更改：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.ImageGrid</span> &#123;<span class="attribute">width</span>: <span class="number">100%</span>;<span class="attribute">max-width</span>: <span class="number">1040px</span>;<span class="attribute">margin</span>: <span class="number">0</span> auto; <span class="attribute">text-align</span>: center;&#125;</span><br><span class="line"><span class="selector-class">.card</span> &#123;<span class="attribute">overflow</span>: hidden;<span class="attribute">transition</span>: .<span class="number">3s</span> ease-in-out; <span class="attribute">border-radius</span>: <span class="number">8px</span>; <span class="attribute">background-color</span>: <span class="number">#ddd</span>;&#125;</span><br><span class="line"><span class="selector-class">.ImageInCard</span> &#123;&#125;</span><br><span class="line"><span class="selector-class">.ImageInCard</span> <span class="selector-tag">img</span> &#123;<span class="attribute">padding</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>;&#125;</span><br><span class="line"><span class="selector-class">.TextInCard</span> &#123;<span class="attribute">line-height</span>: <span class="number">54px</span>; <span class="attribute">background-color</span>: <span class="number">#ffffff</span>; <span class="attribute">font-size</span>: <span class="number">24px</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自动构建"><a href="#自动构建" class="headerlink" title="自动构建"></a>自动构建</h2><p>我是使用过<a target="_blank" rel="noopener" href="https://www.travis-ci.org/">travis-ci</a>自动构建的。（用过以后表示很鸡肋）<br>如果你也使用了这个的话，在<code>travis.yml</code>中的<code>script</code>或者<code>before_script</code>,添加一句<code>node tool.js</code>,就可以将相册脚本也加入自动构建（需要注意的是必须在<code>hexo g</code>前执行）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">script</span>:</span><br><span class="line">  - node tool.<span class="property">js</span></span><br><span class="line">  - hexo g</span><br></pre></td></tr></table></figure>
+
+
+
+  </article>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <div class="busuanzi center">
+    page PV:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    site PV:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    site UV:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <style>
+        .vcard .vimg{left:0;}
+        </style>
+        <div id="vcomment" class="vcomment" style="padding:0 6% 0 7%;"></div>
+        <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        <script>
+            var GUEST_INFO = ['nick','mail','link'];
+            var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+                return GUEST_INFO.indexOf(item) > -1
+            });
+            var notify = 'false' == true;
+            var verify = 'false' == true;
+            var valine = new Valine();
+            valine.init({
+                el: '.vcomment',
+                notify: notify,
+                verify: verify,
+                appId: "EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz",
+                appKey: "7oXQjRGMPLzwU8KFGgx6Nvdr",
+                placeholder: "请发布你的评论:D",
+                pageSize:'10',
+                avatar:'mm',
+                lang:'zh-cn'
+            })
+        </script>
+    
+
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Fchange 2016-2024
+    </div>
+    <div class="secondrow">
+        <a target="_blank" rel="noopener" href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

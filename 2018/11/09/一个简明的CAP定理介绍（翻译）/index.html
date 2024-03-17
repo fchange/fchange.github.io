@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  <meta name="referrer" content="unsafe-url">
+  
+  <title>「翻译」一个简明CAP定理介绍</title>
+  <meta name="author" content="Fchange">
+  <meta name="description" content="life is like a dream">
+  
+  
+  <meta property="og:title" content="「翻译」一个简明CAP定理介绍"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="Fchange"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="Fchange" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="main-ctnr">
+      <div class="behind">
+  <a href="/" class="back black-color">
+    <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+        <path d="M2 30 L30 2 M30 30 L2 2"></path>
+    </svg>
+  </a>
+  
+    <div class="description">
+      &nbsp;life is like a dream
+    </div>
+    
+</div>
+
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        「翻译」一个简明CAP定理介绍
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      <time datetime="2018-11-08T16:00:00.000Z" itemprop="datePublished">
+  <svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2018-11-09
+</time>
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/翻译集/">翻译集</a>
+
+
+
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E4%BD%A0%E7%9A%84%E6%96%B0%E5%85%AC%E5%8F%B8%E2%80%9CRemembrance-%E5%85%AC%E5%8F%B8%E2%80%9D"><span class="toc-text">第一章: 你的新公司“Remembrance 公司”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%85%AC%E5%8F%B8%E6%89%A9%E5%BC%A0"><span class="toc-text">第二章: 公司扩张</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E2%80%9C%E5%B7%AE%E8%AF%84%E2%80%9D"><span class="toc-text">第三章: 你的第一个“差评”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E8%A7%A3%E5%86%B3%E4%B8%80%E8%87%B4%E6%80%A7%EF%BC%88Consistency%EF%BC%89%E9%97%AE%E9%A2%98"><span class="toc-text">第四章: 解决一致性（Consistency）问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%9A%E6%9C%89%E5%8F%B2%E4%BB%A5%E6%9D%A5%E6%9C%80%E5%A5%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">第五章：有史以来最好的解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%9A%E4%BD%A0%E7%9A%84%E5%A6%BB%E5%AD%90%E7%94%9F%E6%B0%94%E4%BA%86"><span class="toc-text">第六章：你的妻子生气了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9A%E7%BB%93%E8%AE%BA"><span class="toc-text">第七章：结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%95%AA%E5%A4%96-%E4%BF%9D%E8%AF%81%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7%E7%9A%84%E8%B7%91%E8%85%BF%E6%9F%9C%E5%91%98"><span class="toc-text">番外: 保证最终一致性的跑腿柜员</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%91%E8%80%85%E8%AF%BB%E5%90%8E%E6%84%9F"><span class="toc-text">译者读后感</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <p>CAP理论总是听过，可我总是讲不清它。或许是我还没遇到那么深刻的场景让我深思吧,当然这也不影响我学习它。这篇从现实生活入手介绍CAP的文章很有意思，值得一看哦<br>翻译自<a target="_blank" rel="noopener" href="http://ksat.me/">http://ksat.me</a> ， <a target="_blank" rel="noopener" href="http://ksat.me/a-plain-english-introduction-to-cap-theorem/">原文链接</a>。</p>
+<hr>
+<p>我想你会经常听到CAP定理，在设计分布式系统时，它点出了技术上的“天花板”。与我的大多数其他入门教程一样，让我们通过将CAP与实际情况进行比较来理解它。</p>
+<h2 id="第一章-你的新公司“Remembrance-公司”"><a href="#第一章-你的新公司“Remembrance-公司”" class="headerlink" title="第一章: 你的新公司“Remembrance 公司”"></a>第一章: 你的新公司“Remembrance 公司”</h2><p>昨晚，你的妻子夸赞你记住了她的生日还给她送了一份礼物，突然你想到一个很好的点子。人们在记东西方面总是差强人意。而你在这方面又很很很好。那么，何不开一家能发挥你这种天赋的公司呢？你越想越觉得这个主意靠谱，你甚至想出了一个报纸广告来推广你的idea。</p>
+<blockquote>
+<p>Remembrance 公司! - 永远不会忘记,  即使你是鱼的记忆！<br>你曾因为忘记太多东西而感到伤心难过吗?  别担心。现在只要打个电话就能得到帮助!</p>
+<p>当你需要记住一样东西, 只需拨打 131- **** ，然后告诉我们你想记住什么。  比如：打电话给我们，告诉我们你老板的电话号码，然后当你忘记了它又迫切需要记起时，打回这个电话，我们就会告诉你你老板的电话号码。</p>
+<p>费用 :  每个请求只需要0.1美元！</p>
+</blockquote>
+<p>所以，你的电话对话都将会是这样的:</p>
+<ul>
+<li>顾客：“ 嘿，你能帮我记住邻居的生日吗?”</li>
+<li>你：“ OK。。是哪一天呢？”</li>
+<li>顾客 ：“ 一月二号”</li>
+<li>你 (把它写在客户专属的那页纸笔记本上)：“已记录。现在您可以随时打电话告诉询问我们你邻居的生日！”</li>
+<li>顾客 ：“谢谢!”</li>
+<li>你：“不客气！我们将从你的信用卡收取0.1美元作为记录费用。”</li>
+</ul>
+<h2 id="第二章-公司扩张"><a href="#第二章-公司扩张" class="headerlink" title="第二章: 公司扩张"></a>第二章: 公司扩张</h2><p>你的公司得到了 YCombinator 的资助。你的想法很简单，只需要一个纸笔记本和一个电话，然而却如此有效，业务量像野火一样蔓延开来。你开始每天都能接到数百个电话。</p>
+<p>这就造成了个问题。你发现越来越多的顾客不得不排队等着和你说话了。<br>他们中的大多数人甚至厌倦了等待的电话音而选择挂断电话。另外，前几天你生病了，不能来上班，你因此又损失了一整天的生意。<br>更不用说那些不满意的客户了，他们恰好那一天迫切需要这些信息。<br>于是你决定是时候扩大规模，让你的妻子来帮助你了。</p>
+<p>从一个简单的计划开始:</p>
+<ul>
+<li>你和你的妻子各持有一个分机</li>
+<li>客户仍然可以拨打131- **** ，并且仍然只需要记住这一个数字。（这并没有什么变化）</li>
+<li>专用的交换机会把客户的电话平均得路由到每个人的分机上。</li>
+</ul>
+<h2 id="第三章-你的第一个“差评”"><a href="#第三章-你的第一个“差评”" class="headerlink" title="第三章: 你的第一个“差评”"></a>第三章: 你的第一个“差评”</h2><p>在你实施新系统两天后，你接到了你的老客户Jhon的电话。事情是这样的:</p>
+<ul>
+<li>Jhon：“Hey”</li>
+<li>你：     “ 很高兴你打电话给“Remembrance 公司”。我能为您效劳吗?”</li>
+<li>Jhon：“ 你能告诉我去新德里的航班是什么时候吗?”</li>
+<li>你：     “可以. .请给我1秒种时间，先生。”</li>
+<li>(你开始查你的笔记本)</li>
+<li><strong>(哇!在Jhon的那一页上没有“航班”的信息)!!!!!</strong></li>
+<li>你：     “先生，我想你是弄错了。你从没告诉过我们你去德里的航班的信息。”</li>
+<li>Jhon：“什么!我昨天刚给你们打电话!(愤怒得挂掉电话!)”<br>这是怎么回事呢？Jhon 会说谎吗？你想了一会儿，便知道了问题在哪！你妻子昨天接到 Jhon 的电话了吗？你去你妻子的桌子上看了看她的笔记本，果然就在那里。你把这个告诉你的妻子，她也意识到了问题。</li>
+</ul>
+<p>你的分布式设计有那么严重的缺陷！<strong>你的分布式系统不一致（consistent）! 客户随时都有可能更新一些东西，这些东西可能是你记录，也可能是你的妻子记录，当下一个客户的电话被转到另一个人的时候，Remembrance 公司就不能提供一致（consistent）的回复了</strong>。</p>
+<h2 id="第四章-解决一致性（Consistency）问题"><a href="#第四章-解决一致性（Consistency）问题" class="headerlink" title="第四章: 解决一致性（Consistency）问题"></a>第四章: 解决一致性（Consistency）问题</h2><p>嗯，你的竞争对手可能会忽略这一次糟糕的服务，但你不会。在你妻子熟睡之时，你整夜都躺在床上冥思苦想，清晨之时便想出一个漂亮的计划。<br>你叫醒你的妻子，告诉她：“亲爱的，我们从现在开始这样做。”</p>
+<ul>
+<li>每当我们中的任何一个人接到电话要求<strong>更新</strong>(当客户想让我们记住某件事)时，我们都会在电话结束前告诉对方，这样我们双方都能记下所有更新。</li>
+<li>当需要<strong>查询</strong>时(当客户来问信息的时候)，我们就不需要互通有无了。由于我们两个人都有最新的数据了，所以查一下就可以了。</li>
+</ul>
+<p>不过，只有一个问题，如你所说。那就是<strong>更新</strong>请求必须涉及到我们两个人，我们不能在这段时间内并行工作。<br>比如：当你收到更新请求并通知我也需要更新时，我就不能接其他电话了。当然这也没多大关系，因为我们接到的大多数电话都是<strong>搜索</strong>(客户更新一次，并多次询问)。而且，我们需要不惜任何代价以提供正确的信息。</p>
+<p>“漂亮”，你妻子说，“但是你忘了一件事，如果我们有人突然有一天不上班怎么办？那么，我们那一天将不能接受<strong>任何</strong>更新电话，因为另外一个人不在上班，所以不能更新！”</p>
+<p>如此我们便出现了 <strong>可用性（Availability）问题， 比如：即使我收到了更新电话，我仍无法完成这个请求，因为即使我在记事本中更新了数据，我也无法让你更新这条数据。</strong></p>
+<h2 id="第五章：有史以来最好的解决方案"><a href="#第五章：有史以来最好的解决方案" class="headerlink" title="第五章：有史以来最好的解决方案"></a>第五章：有史以来最好的解决方案</h2><p>你开始意识到分布式系统并不像你一开始想的那么简单。提出一个 <strong>“一致且可用（Consistent and Available）”</strong> 的解决方案有那么难吗？对别人来说可能很困难，但对你来说却不一定！第二天早上，你想出了一个你的竞争对手做梦都想不到的解决方案！你又急匆匆地把妻子叫醒了。</p>
+<p>“看”，你告诉她：“我们可以这样做，既保持一致性，又有可用性”。这个计划和你昨天提出的方案很像：</p>
+<ul>
+<li>每当我们中的任何一个人接到电话要求更新(当客户想让我们记住某件事时)，在挂掉电话之前，如果另一个人有时间（空闲），我们会告诉对方。这样我们都能记下任何更新。</li>
+<li>但是如果另一个人不在，我们会给他发一封邮件，告诉他需要更新的信息。</li>
+<li>第二天，当那个人休息一天后来上班时，在上班接电话之前，他首先要做的是查看所有的电子邮件，并相应地更新他的记事本。</li>
+</ul>
+<p>“你真是个天才！”，你妻子说！“我找不到这个系统的任何缺陷。现在 Remembrance 公司 <strong>一致且可用（Consistent and Available）</strong> 了！”</p>
+<h2 id="第六章：你的妻子生气了"><a href="#第六章：你的妻子生气了" class="headerlink" title="第六章：你的妻子生气了"></a>第六章：你的妻子生气了</h2><p>这段时间一切都很顺利。你的系统是一致的。你的系统工作得很好，即使你们中有一个人没有来工作。</p>
+<p>但如果你们两个都去上班，而其中一个选择罢工呢？还记得那些日子吗？你总是用你那些新的想法把你老婆吵醒？ <strong>如果你的妻子决定生你气，一直拒绝接受你的通知，邮件也不看呢？</strong></p>
+<p><strong>所以你的这个想法完全行不通！到目前为止，您的想法在一致性和可用性方面都做得很好，但是并不”分区容忍”</strong> 你可以通过不再接任何电话，直到你和你的妻子和好为止的方式，来解决分区问题。那么您的系统在这段时间里将无法保证<strong>可用性（available）</strong></p>
+<blockquote>
+<p>分区容错性（Partition tolerance）（以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在一致性（Consistency）和可用性（Availability）之间做出选择。）</p>
+</blockquote>
+<p><strong>以上是来自WIKI的解析</strong></p>
+<h2 id="第七章：结论"><a href="#第七章：结论" class="headerlink" title="第七章：结论"></a>第七章：结论</h2><p>现在我们来看看CAP定理。它指出，当你设计一个分布式系统时，你不能得到一个同时满足<strong>一致性</strong>、<strong>可用性</strong>和<strong>分区容错</strong> 这三种功能的系统。所以你只能选择其中两种：</p>
+<ul>
+<li><strong>一致性</strong>：你的客户们，一旦向你更新了最新的信息，当他们随后打电话总是会得到最新的信息。不管他们什么时候回拨电话。</li>
+<li><strong>可用性</strong>：在你们(你或你的妻子)其中一人休假时，Remembrance公司随时待命。</li>
+<li><strong>分区容错</strong>：即使你和你的妻子失去了联系，Remembrance 公司也能正常工作。</li>
+</ul>
+<h2 id="番外-保证最终一致性的跑腿柜员"><a href="#番外-保证最终一致性的跑腿柜员" class="headerlink" title="番外: 保证最终一致性的跑腿柜员"></a>番外: 保证最终一致性的跑腿柜员</h2><p>这是另一个值得思考的问题。你可以雇一个别的员工，当你或你妻子的笔记本更新后，他会更新其他人的笔记本。这样做的最大好处是，他可以在后台工作，而你或你妻子的任何<strong>更新</strong>不必等待另一个完成更新。</p>
+<p>这其实也是多NoSql系统工作的方式，一个节点在本地自更新，一个后台进程相应地同步数据到其他节点。</p>
+<p>这样唯一的问题便是，您将<strong>在一段时间范围内不满足一致性</strong>。当然即使是这样，这也不是一个坏的系统。因为顾客不会很快忘记事情所以他不会在5分钟内回电话。（而五分钟足够满足<strong>最终一致性</strong>）</p>
+<p>这就是CAP和最终一致性，enjoy it. :)</p>
+<h2 id="译者读后感"><a href="#译者读后感" class="headerlink" title="译者读后感"></a>译者读后感</h2><p>这里只是简单讲解了一下CAP定理涉及到的简单场景，个人感觉没有很好的讲明分区容错。</p>
+<p>一般情况下是时延导致的一个集群中的数据出现了多个版本，一部分节点存储了A版本的数据，另一部分存储B版本的数据，也就是出现了<strong>分区</strong>，而分区容错是能很好的解决掉分区状况。</p>
+<p>一般解决分区情况，需要在C(onsistency)和A(vailable)之间做取舍。</p>
+<ul>
+<li>保证一致性便会在这段时间里失去可用性。</li>
+<li>而忽略一致性才能保证系统的可用性。</li>
+</ul>
+
+
+  </article>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <div class="busuanzi center">
+    page PV:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    site PV:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    site UV:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <style>
+        .vcard .vimg{left:0;}
+        </style>
+        <div id="vcomment" class="vcomment" style="padding:0 6% 0 7%;"></div>
+        <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        <script>
+            var GUEST_INFO = ['nick','mail','link'];
+            var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+                return GUEST_INFO.indexOf(item) > -1
+            });
+            var notify = 'false' == true;
+            var verify = 'false' == true;
+            var valine = new Valine();
+            valine.init({
+                el: '.vcomment',
+                notify: notify,
+                verify: verify,
+                appId: "EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz",
+                appKey: "7oXQjRGMPLzwU8KFGgx6Nvdr",
+                placeholder: "请发布你的评论:D",
+                pageSize:'10',
+                avatar:'mm',
+                lang:'zh-cn'
+            })
+        </script>
+    
+
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Fchange 2016-2024
+    </div>
+    <div class="secondrow">
+        <a target="_blank" rel="noopener" href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

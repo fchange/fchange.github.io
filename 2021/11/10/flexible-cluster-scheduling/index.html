@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  <meta name="referrer" content="unsafe-url">
+  
+  <title>关于一个柔性集群调度机制的实现和优化</title>
+  <meta name="author" content="Fchange">
+  <meta name="description" content="life is like a dream">
+  
+  
+  <meta property="og:title" content="关于一个柔性集群调度机制的实现和优化"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="Fchange"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="Fchange" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="main-ctnr">
+      <div class="behind">
+  <a href="/" class="back black-color">
+    <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+        <path d="M2 30 L30 2 M30 30 L2 2"></path>
+    </svg>
+  </a>
+  
+    <div class="description">
+      &nbsp;life is like a dream
+    </div>
+    
+</div>
+
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        关于一个柔性集群调度机制的实现和优化
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      <time datetime="2021-11-09T16:00:00.000Z" itemprop="datePublished">
+  <svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2021-11-10
+</time>
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/随笔/">随笔</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/云原生/">云原生</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E8%B5%9B%E9%A2%98"><span class="toc-text">关于赛题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%86%85%E5%AE%B9"><span class="toc-text">题目内容</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%88%90%E7%BB%A9"><span class="toc-text">成绩</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%E5%92%8C%E6%96%B9%E5%90%91"><span class="toc-text">解题思路和方向</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E9%A1%B9%E7%9B%AE"><span class="toc-text">分析项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E9%81%97%E5%BF%98%E7%AA%97%E5%8F%A3%E7%9A%84%E5%B9%B3%E5%9D%87%E8%80%97%E6%97%B6%E7%BB%9F%E8%AE%A1"><span class="toc-text">基于遗忘窗口的平均耗时统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%93%B6%E9%A2%88%E4%BD%8D%E7%BD%AE"><span class="toc-text">瓶颈位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E6%88%90%E5%8A%9F%E7%8E%87%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-text">针对成功率的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8EwmaBasedLoadBalance%EF%BC%8C%E5%B9%B6%E5%9C%A8%E7%AE%97%E6%B3%95%E4%B8%AD%E8%80%83%E8%99%91%E5%B9%B6%E5%8F%91%E9%87%8F"><span class="toc-text">使用EwmaBasedLoadBalance，并在算法中考虑并发量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%81%9A%E4%BA%86%E4%BD%86%E6%98%AF%E6%94%B6%E6%95%88%E7%94%9A%E5%BE%AE%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="toc-text">做了但是收效甚微的工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0%E5%92%8C%E9%93%BE%E6%8E%A5"><span class="toc-text">参考文章和链接</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <h1 id="关于赛题"><a href="#关于赛题" class="headerlink" title="关于赛题"></a>关于赛题</h1><p>天池大赛又开始啦，不过这回改名了，叫“云原生编程挑战赛”了，这回有三个题目，我选择了其中的第二个项目：<strong>实现一个柔性集群调度机制</strong></p>
+<p><a target="_blank" rel="noopener" href="https://tianchi.aliyun.com/s/a8c27d9b68dc3400cf6616efb68fdf43">2021第二届云原生编程挑战赛2：实现一个柔性集群调度机制-天池大赛-阿里云天池</a></p>
+<h2 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h2><p>Apache Dubbo 作为一款可拓展性极高的 RPC 框架，支持高度自定义化的集群调度机制，本次比赛要求参赛者基于 Dubbo 提供的集群调度自定义化能力，辅以调用过滤链机制、自定义负载均衡机制等功能，设计一种柔性调度机制。</p>
+<p>一般来说，集群大规模部署可能会遇到这些问题：</p>
+<p>首先，由于网络波动或者是机器维护等客观原因，导致部分节点阶段性地不可用。</p>
+<p>其次，得益于虚拟化机制，当今云计算的资源利用率可以大幅提高，这会带来诸如虚拟机之间相互争用宿主机资源，部分虚拟机会因此性能显著下降。</p>
+<p>而集群的柔性调度正是指 Dubbo 能够从全局的角度合理分配请求，达到集群的自适应。具体来说使消费者能够快速地感知服务端节点性能的随机变化，通过调节发送往不同服务端节点的请求数比例分配变得更加合理，让 Dubbo 即使遇到集群大规模部署带来的问题，也可以提供最优的性能。</p>
+<h1 id="成绩"><a href="#成绩" class="headerlink" title="成绩"></a>成绩</h1><p>通过初版的基于窗口的动态监测生产端内存使用率和耗时策略。</p>
+<p>我创建的小队，取得A榜（提供日志可调试）60名的成绩。</p>
+<p>最终成绩定位在B榜17名。</p>
+<p>证书如下：</p>
+<p><img src="/blogimg/2021/zhengshu.png"></p>
+<h1 id="解题思路和方向"><a href="#解题思路和方向" class="headerlink" title="解题思路和方向"></a>解题思路和方向</h1><h2 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h2><p>首先便是搭建项目了，这一部分其实是体力活。</p>
+<ol>
+<li><p>在code.aliyun.com fork 出一份provider-consumer 并clone到本地，用于开发与调试。</p>
+</li>
+<li><p>clone下来 internal-service项目，internal-service项目依赖provider-consumer提供的调度策略，它默认提供了一个随机的策略。</p>
+</li>
+<li><p>按照教程运行 internal-service，打开浏览器 <a target="_blank" rel="noopener" href="http://localhost:8087/call">http://localhost:8087/call</a> ，显示OK即表示配置成功。</p>
+</li>
+<li><p>使用压测工具来检验性能wrk -t4 -c1024 -d90s -T5 –script&#x3D;.&#x2F;wrk.lua –latency <a target="_blank" rel="noopener" href="http://localhost:8087/invoke">http://localhost:8087/invoke</a></p>
+</li>
+</ol>
+<h2 id="分析项目"><a href="#分析项目" class="headerlink" title="分析项目"></a>分析项目</h2><p>首先便是internal-service了，它被分为三个模块，其中service-provider是provider的实现代码，按照题目原文的: “接口的响应时间符合负指数分布”,我们找到了对应的模拟耗时的代码。</p>
+<p><img src="/blogimg/2021/provider-code.png"></p>
+<p>这是什么的效果呢，rtt耗时会根据当前本进程的并发量和index作相应变化。</p>
+<p><img src="/blogimg/2021/concurrentBaseTimeCost.png"></p>
+<p>这张图是模拟的不同index值时，rtt跟并发量值的关系（每个并发量值重复十次）。</p>
+<p>当然，耗时是随时变化的，但是也是平滑变化的（这里也就假设了并发量在短时间内不会变化得太明显）。</p>
+<p>所以，我们可以通过最近N次请求的实际耗时情况来预测这一次请求的耗时值。</p>
+<h2 id="基于遗忘窗口的平均耗时统计"><a href="#基于遗忘窗口的平均耗时统计" class="headerlink" title="基于遗忘窗口的平均耗时统计"></a>基于遗忘窗口的平均耗时统计</h2><p>由于是自制的遗忘窗口，我这里便创建了一个基于内存的ForgetfulCache，其原理时只保存rememberSize的数据，不断移动index以便重复覆盖内部数据</p>
+<p><img src="/blogimg/2021/ForgetfulCache.png"></p>
+<p>接着便是按照dubbo提供的ActiveLimitFilter，以及 RpcStatus 的实现方式，自定义一遍ForgetfulRpcStatus.</p>
+<p>ActiveLimitFilter(from dubbo): </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ActiveLimitFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span>, Filter.Listener &#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">invoke</span><span class="params">(Invoker&lt;?&gt; invoker, Invocation invocation)</span> <span class="keyword">throws</span> RpcException &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">final</span> <span class="type">RpcStatus</span> <span class="variable">rpcStatus</span> <span class="operator">=</span> RpcStatus.getStatus(invoker.getUrl(), invocation.getMethodName());</span><br><span class="line">        <span class="keyword">if</span> (!RpcStatus.beginCount(url, methodName, max)) &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">return</span> invoker.invoke(invocation);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(Result appResponse, Invoker&lt;?&gt; invoker, Invocation invocation)</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">        RpcStatus.endCount(url, methodName, getElapsed(invocation), <span class="literal">true</span>);</span><br><span class="line">		...</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>TestClientFilter: (DIY)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestClientFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span>, BaseFilter.Listener &#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">invoke</span><span class="params">(Invoker&lt;?&gt; invoker, Invocation invocation)</span> <span class="keyword">throws</span> RpcException &#123;</span><br><span class="line">        ForgetfulRpcStatus.beginCount(url, methodName);</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">return</span> invoker.invoke(invocation);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(Result appResponse, Invoker&lt;?&gt; invoker, Invocation invocation)</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">        ForgetfulRpcStatus.endCount(url, methodName, getElapsed(invocation), <span class="literal">true</span>);</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>ForgetfulRpcStatus 关键代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Data</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">long</span> elapsed;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">boolean</span> succeeded;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">long</span> time;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Data</span><span class="params">(<span class="type">long</span> elapsed, <span class="type">boolean</span> succeeded, <span class="type">long</span> time)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.elapsed = elapsed;</span><br><span class="line">        <span class="built_in">this</span>.succeeded = succeeded;</span><br><span class="line">        <span class="built_in">this</span>.time = time;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ForgetfulCache&lt;Data&gt; remember;</span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ForgetfulRpcStatus</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.remember = <span class="keyword">new</span> <span class="title class_">ForgetfulCache</span>(REMEMBER_SIZE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">beginCount</span><span class="params">(URL url, String methodName)</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">endCount</span><span class="params">(ForgetfulRpcStatus status, <span class="type">long</span> elapsed, <span class="type">boolean</span> succeeded)</span> &#123;</span><br><span class="line">    status.remember.add(<span class="keyword">new</span> <span class="title class_">Data</span>(elapsed, succeeded, System.currentTimeMillis()));</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getAverageElapsed</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> remember.getCache().stream()</span><br><span class="line">            .filter(Objects::nonNull)</span><br><span class="line">            .mapToLong(Data::getElapsed)</span><br><span class="line">            .average().orElse(<span class="number">0D</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>现在，我们通过ForgetfulRpcStatus就可以拿到过去一定”次数“下的耗时了，只需要在UserClusterInvoker#doInvoke时，在invoker.invoke前给上下文信息的TIMEOUT_KEY填充下刚才获取到的历史平均耗时即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="variable">averageElapsed</span> <span class="operator">=</span> ForgetfulRpcStatus.getStatus(url, methodName).getAverageElapsed();</span><br><span class="line"><span class="type">long</span> <span class="variable">ttl</span> <span class="operator">=</span> MathUtil.inRange(<span class="number">5L</span>, <span class="number">5000L</span>, (<span class="type">long</span>) averageElapsed);</span><br><span class="line">logger.info(<span class="string">&quot;[user]consumeTtl||&#123;&#125;|&#123;&#125;|&#123;&#125;|&#123;&#125;&quot;</span>, System.currentTimeMillis(), url.getPort(), averageElapsed, ttl);</span><br><span class="line">RpcContext.getContext().setAttachment(TIMEOUT_KEY, ttl);</span><br><span class="line"><span class="keyword">return</span> invoker.invoke(invocation);</span><br></pre></td></tr></table></figure>
+
+<h2 id="瓶颈位置"><a href="#瓶颈位置" class="headerlink" title="瓶颈位置"></a>瓶颈位置</h2><p>通过讲打点日志汇总,并填充到kibana.(因为这个项目时跟时间序列密切相关的,而且成绩统计是会剔除预热阶段,为了能够找到瓶颈点,特地搭了这个kibana环境)</p>
+<p>因为日志分析的截图有部分缺失，所以在写这篇文章的现在，我提供的部分现象跟分析图片会出现部分图文不符的情况。</p>
+<ol>
+<li>请求成功率低，后期基本都是在0.5-0.6，以20880最为明显。</li>
+</ol>
+<p>![](&#x2F;blogimg&#x2F;2021&#x2F;截屏2021-10-16 下午4.08.35.png)</p>
+<ol start="2">
+<li>耗时统计前期会时高预期（符合逻辑）。到达稳定时，各节点的预计耗时在3-10ms</li>
+</ol>
+<p>![](&#x2F;blogimg&#x2F;2021&#x2F;截屏2021-10-13 上午1.34.29.png)</p>
+<ol start="3">
+<li>失败率会随着时间不断得缓慢增加（无配图）</li>
+</ol>
+<h2 id="针对成功率的优化"><a href="#针对成功率的优化" class="headerlink" title="针对成功率的优化"></a>针对成功率的优化</h2><p>请求成功率偏低，说明预测时间被压缩得太过明显。</p>
+<p>失败率会逐步增加，也就是说在后续得预测中，会预测得越来越差。这个得原因是失败的任务最终耗时会是预测值，那么这个预测值会只降不增（因为历史耗时时间永远不会大于前N次的预测值）</p>
+<p>通过给失败任务添加惩罚机制，即失败任务的耗时会记录到更高的值，能够解决。</p>
+<p>也即在ForgetfulRpcStatus.data 中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">Data</span><span class="params">(<span class="type">long</span> elapsed, <span class="type">boolean</span> succeeded, <span class="type">long</span> time)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.elapsed = succeeded ? elapsed : elapsed * <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">this</span>.succeeded = succeeded;</span><br><span class="line">    <span class="built_in">this</span>.time = time;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到这一步时，这一部分代码已经能使三分钟总吞吐量达到200w，单次请求成功率在 0.8左右。</p>
+<p>但由于提交次数太多，已经找不到可以佐证的具体成绩跟相关日志了。</p>
+<h2 id="使用EwmaBasedLoadBalance，并在算法中考虑并发量"><a href="#使用EwmaBasedLoadBalance，并在算法中考虑并发量" class="headerlink" title="使用EwmaBasedLoadBalance，并在算法中考虑并发量"></a>使用EwmaBasedLoadBalance，并在算法中考虑并发量</h2><p>我们还可以做更多吗，这是可以的。</p>
+<p>通过一些统计学知识的补充，我意识到我们可以使用Ewma来完成耗时统计,并在算法中考虑并发量。</p>
+<p>思路来自于<a target="_blank" rel="noopener" href="https://github.com/apache/dubbo-spi-extensions/pull/68%EF%BC%8C%E6%88%91%E7%9A%84%E5%AE%9E%E7%8E%B0%E9%87%8C%E6%8A%8A%E5%AF%B9%E5%BA%94%E9%80%BB%E8%BE%91%E6%90%AC%E8%BF%90%E5%88%B0%E4%BA%86EwmaRpcStatus">https://github.com/apache/dubbo-spi-extensions/pull/68，我的实现里把对应逻辑搬运到了EwmaRpcStatus</a></p>
+<blockquote>
+<p>I am disappointment with shortestResponseLoadBalance，though it is better than others in latency spike. However, it’s slow for it depends on average.I am looking forwad to a sensitive loadbance.</p>
+<p>PeakEwmaLoadBalance is designed to converge quickly when encountering slow endpoints.<br>It is quick to react to latency spikes recovering only cautiously.Peak EWMA takes history into account,so that slow behavior is penalized relative to the supplied <code>decayTime</code>.</p>
+</blockquote>
+<p>核心代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">endCount</span><span class="params">(EwmaRpcStatus status, <span class="type">long</span> elapsed, <span class="type">boolean</span> succeeded)</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">long</span> <span class="variable">currentTime</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">    <span class="type">long</span> <span class="variable">td</span> <span class="operator">=</span> Math.max(currentTime - status.lastUpdateTime, <span class="number">0</span>);</span><br><span class="line">    <span class="type">double</span> <span class="variable">w</span> <span class="operator">=</span> Math.exp(-td / decayTime);</span><br><span class="line"></span><br><span class="line">    status.cost.updateAndGet(c -&gt; c == <span class="number">0D</span> ? elapsed : (c * w + elapsed * (<span class="number">1.0</span> - w)));</span><br><span class="line">    status.active.decrementAndGet();</span><br><span class="line">    status.lastUpdateTime = currentTime;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到这里，便是形成我的最高分数的策略了，基于EwmaRpcStatus 和 ForgetfulRpcStatus（with simple punish）实现的EwmaBasedLoadBalance和耗时预计。</p>
+<p>很奇怪的点是我尝试使用EwmaRpcStatus提供耗时预计时，并没有得到很好的成绩，由于当时时间的原因，便没有再尝试了。这里是比较遗憾的点。</p>
+<h1 id="做了但是收效甚微的工作"><a href="#做了但是收效甚微的工作" class="headerlink" title="做了但是收效甚微的工作"></a>做了但是收效甚微的工作</h1><ul>
+<li>基于CPU使用率和虚拟内存使用率(注意这里时虚拟内存，因为实验环境是在Docker上的)的LoadBalance。</li>
+<li>单纯以并发量作为权重的LoadBalance。</li>
+<li>以单位时间内成功率作为权重的LoadBalance。</li>
+<li>在TestClientFilter加入重试机制，优点是提高成功率，缺点是这会导致gateway的阻塞，降低gateway的吞吐量。</li>
+</ul>
+<h1 id="参考文章和链接"><a href="#参考文章和链接" class="headerlink" title="参考文章和链接"></a>参考文章和链接</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.whywhy.vip/archives/128">一不小心，用力过猛，成了榜一大哥…</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jiangxinyang/p/9705198.html">指数加权移动平均法（EWMA）</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/dubbo-spi-extensions/pull/68">add PeakEwmaLoadBalance</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.aliyun.com/fangcheng0724/pullbased-cluster">代码（未整理，代码最终版本在分支master中）</a></li>
+</ul>
+
+
+  </article>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <div class="busuanzi center">
+    page PV:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    site PV:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    site UV:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <style>
+        .vcard .vimg{left:0;}
+        </style>
+        <div id="vcomment" class="vcomment" style="padding:0 6% 0 7%;"></div>
+        <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        <script>
+            var GUEST_INFO = ['nick','mail','link'];
+            var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+                return GUEST_INFO.indexOf(item) > -1
+            });
+            var notify = 'false' == true;
+            var verify = 'false' == true;
+            var valine = new Valine();
+            valine.init({
+                el: '.vcomment',
+                notify: notify,
+                verify: verify,
+                appId: "EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz",
+                appKey: "7oXQjRGMPLzwU8KFGgx6Nvdr",
+                placeholder: "请发布你的评论:D",
+                pageSize:'10',
+                avatar:'mm',
+                lang:'zh-cn'
+            })
+        </script>
+    
+
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Fchange 2016-2024
+    </div>
+    <div class="secondrow">
+        <a target="_blank" rel="noopener" href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

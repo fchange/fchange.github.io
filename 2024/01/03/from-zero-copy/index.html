@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  <meta name="referrer" content="unsafe-url">
+  
+  <title>从Kafka的零拷贝说起</title>
+  <meta name="author" content="Fchange">
+  <meta name="description" content="life is like a dream">
+  
+  
+  <meta property="og:title" content="从Kafka的零拷贝说起"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="Fchange"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="Fchange" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="main-ctnr">
+      <div class="behind">
+  <a href="/" class="back black-color">
+    <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+        <path d="M2 30 L30 2 M30 30 L2 2"></path>
+    </svg>
+  </a>
+  
+    <div class="description">
+      &nbsp;life is like a dream
+    </div>
+    
+</div>
+
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        从Kafka的零拷贝说起
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      <time datetime="2024-01-02T16:00:00.000Z" itemprop="datePublished">
+  <svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2024-01-03
+</time>
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/随笔/">随笔</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/技术/">技术</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kafka%E7%9A%84%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="toc-text">Kafka的零拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RabbitMQ%E8%83%BD%E7%94%A8%E5%90%97%EF%BC%9F"><span class="toc-text">RabbitMQ能用吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E6%9C%89%E4%BB%80%E4%B9%88%E8%AE%A9%E6%88%91%E4%BB%AC%E5%BF%BD%E7%95%A5%E4%BA%86%EF%BC%9F"><span class="toc-text">还有什么让我们忽略了？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <h2 id="Kafka的零拷贝"><a href="#Kafka的零拷贝" class="headerlink" title="Kafka的零拷贝"></a>Kafka的零拷贝</h2><p>Kafka相对于其他消息队列（MQ）系统而言被认为较快的原因有很多。其中一个关键的性能优势就是零拷贝技术的应用。零拷贝是一种通过减少内存复制来提高数据传输性能的技术，对于Kafka的设计有着重要的影响。在Kafka中，零拷贝的实现允许消息在传输过程中最小化内存复制，从而提高了整体性能。</p>
+<blockquote>
+<p>We expect a common use case to be multiple consumers on a topic. Using the zero-copy optimization above, data is copied into pagecache exactly once and reused on each consumption instead of being stored in memory and copied out to user-space every time it is read. This allows messages to be consumed at a rate that approaches the limit of the network connection.</p>
+</blockquote>
+<blockquote>
+<p>For more background on the sendfile and zero-copy support in Java, see this <a target="_blank" rel="noopener" href="https://developer.ibm.com/articles/j-zerocopy/">article</a>.</p>
+</blockquote>
+<p>通过零拷贝技术，消费者可以将消息直接传输到内存中，避免了数据从内核空间复制到用户空间的过程。生产者将消息追加到磁盘上的日志文件上。</p>
+<h2 id="RabbitMQ能用吗？"><a href="#RabbitMQ能用吗？" class="headerlink" title="RabbitMQ能用吗？"></a>RabbitMQ能用吗？</h2><p>与Kafka不同，RabbitMQ 是一个基于 AMQP（Advanced Message Queuing Protocol）的消息队列系统，它着重于<strong>提供可靠的消息传递服务</strong>。</p>
+<p>尽管 Kafka 和 RabbitMQ 都支持消息的持久化，但它们的设计理念和底层实现方式不同，这导致它们在持久化方案和数据结构上存在差异。</p>
+<p>rabbitmq的消息体存储格式，不允许它读取磁盘数据后直接传输给客户端。这样的设计导致在消息传递中**涉及更多的磁盘 I&#x2F;O 操作 和 内存操作 **，所以它并不能使用零拷贝技术。</p>
+<p>作为对比，Kafka采用顺序写磁盘的方式来存储消息。这意味着生产者产生的消息按照它们的写入顺序被追加到磁盘上的日志文件中。这种顺序存储的方式有助于提高磁盘的顺序读写性能，也帮助了使用零拷贝技术来辅助消息传递性能。</p>
+<h2 id="还有什么让我们忽略了？"><a href="#还有什么让我们忽略了？" class="headerlink" title="还有什么让我们忽略了？"></a>还有什么让我们忽略了？</h2><p>那么如果 RabbitMQ 修改了存储的数据结构使得可以直接传给消费者，RabbitMQ 是否能使用到【零拷贝】技术呢？</p>
+<p>答案是否定的，因为零拷贝技术的一个前提是<strong>消息的不可变性</strong>，即一旦消息被创建，就不会再被修改。由于 RabbitMQ 允许消息包含消费状态，并且支持确认和拒绝消息的操作，这可能导致消息在消费过程中会发生数据变化。所以，即使 RabbitMQ 修改了存储的数据结构使得可以直接传给消费者，RabbitMQ 依旧不能使用到【零拷贝】技术。</p>
+<p>那么kafka的设计理念是什么呢？它用简单的消息模型来保证<strong>消息的不可变性</strong>，用另外的更加依赖客户端的方式来保证了消息的消费与重试。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过对比Kafka和RabbitMQ的零拷贝技术应用和设计理念，我们可以得出结论：</p>
+<ul>
+<li><strong>Kafka的零拷贝技术</strong>在大规模数据流处理中表现出色，通过最小化内存复制提高了消息传输的效率。其顺序存储和分区设计使得零拷贝更易于应用，特别是在高吞吐量场景下。</li>
+<li><strong>RabbitMQ注重可靠的消息传递服务</strong>，强调持久性和一致性。其设计允许消息包含消费状态，但这也可能导致在传递过程中消息的变化，从而不适合直接应用零拷贝技术。</li>
+</ul>
+
+
+  </article>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <div class="busuanzi center">
+    page PV:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    site PV:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    site UV:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <style>
+        .vcard .vimg{left:0;}
+        </style>
+        <div id="vcomment" class="vcomment" style="padding:0 6% 0 7%;"></div>
+        <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        <script>
+            var GUEST_INFO = ['nick','mail','link'];
+            var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+                return GUEST_INFO.indexOf(item) > -1
+            });
+            var notify = 'false' == true;
+            var verify = 'false' == true;
+            var valine = new Valine();
+            valine.init({
+                el: '.vcomment',
+                notify: notify,
+                verify: verify,
+                appId: "EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz",
+                appKey: "7oXQjRGMPLzwU8KFGgx6Nvdr",
+                placeholder: "请发布你的评论:D",
+                pageSize:'10',
+                avatar:'mm',
+                lang:'zh-cn'
+            })
+        </script>
+    
+
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Fchange 2016-2024
+    </div>
+    <div class="secondrow">
+        <a target="_blank" rel="noopener" href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

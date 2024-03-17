@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  <meta name="referrer" content="unsafe-url">
+  
+  <title>「翻译」The Reactive Landscape</title>
+  <meta name="author" content="Fchange">
+  <meta name="description" content="life is like a dream">
+  
+  
+  <meta property="og:title" content="「翻译」The Reactive Landscape"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="Fchange"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="Fchange" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="main-ctnr">
+      <div class="behind">
+  <a href="/" class="back black-color">
+    <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+        <path d="M2 30 L30 2 M30 30 L2 2"></path>
+    </svg>
+  </a>
+  
+    <div class="description">
+      &nbsp;life is like a dream
+    </div>
+    
+</div>
+
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        「翻译」The Reactive Landscape
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      <time datetime="2019-01-03T16:00:00.000Z" itemprop="datePublished">
+  <svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2019-01-04
+</time>
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/翻译集/">翻译集</a>
+
+
+
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Is-It"><span class="toc-text">What Is It?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reactive-Use-Cases"><span class="toc-text">Reactive Use Cases</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Comparisons"><span class="toc-text">Comparisons</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ruby-Event-Machine"><span class="toc-text">Ruby Event-Machine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Actor-Model"><span class="toc-text">Actor Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deferred-results-Futures"><span class="toc-text">Deferred results (Futures)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map-reduce-and-fork-join"><span class="toc-text">Map-reduce and fork-join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Coroutines"><span class="toc-text">Coroutines</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reactive-Programming-in-Java"><span class="toc-text">Reactive Programming in Java</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-Now"><span class="toc-text">Why Now?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-text">Conclusion</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <p>同事推荐了我spring webFlux，查阅了一番觉得很有趣，这里是spring webFlux的一些基本信息 – <a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/web-reactive.html">web-reactive</a>。文档中推荐了一篇文章，写的很好（至少评论们是这么说的哈哈）。特搬运过来。</p>
+<p>注：下文中斜体是译者胆大妄为添加的一些语句。如<em>这几个字。</em></p>
+<p>翻译自<a target="_blank" rel="noopener" href="http://www.spring.io/">www.spring.io</a> ， <a target="_blank" rel="noopener" href="https://spring.io/blog/2016/06/07/notes-on-reactive-programming-part-i-the-reactive-landscape">原文链接</a>，这篇是作者2016年的作品。</p>
+<hr>
+<p>响应式编程很有趣(再次强调)，目前有很多关于它的讨论，对于一个局外人和简单的企业Java开发人员(如作者)（<em>是原文的作者，兴许大牛都是这么皮的吧</em>）来说，这些并不是都很容易理解。本文(系列文章的第一篇)通过尽可能具体的，没有提到“外延语义”的方式，希望能帮助您能理解这些令人困窘的话题。如果您正在Haskell中寻找一种更学术化的方法和更多的代码示例，那么网上就充满了这些示例，当然你可能就不想再看下去了。</p>
+<p>响应式编程常常与并发编程和高性能结合在一起，以至于很难将这些概念分开，而实际上它们在原则上是完全不同的。这不可避免地会导致混淆。响应式编程也常常被称为函数式响应编程或者FRP(也就是首字母组合的把戏而已： <code>Functional Reactive Programming</code>)。有些人认为响应式并不是什么新东西，而且这也是他们整天都在做的事情(大多数情况下他们是JavaScript guy)。也有些人认为似乎这是微软出的彩蛋(微软不久前发布了一些c#扩展，曾引起了轰动)。在企业级Java领域，最近出现了一些热门话题(例如，请参阅<a target="_blank" rel="noopener" href="http://www.reacti-streams.org/">Reactive Streams initiative</a>)。与任何闪亮发亮的新事物一样，关于何时何地能够或者说应该使用它，我们仍然有许多易犯的错误。</p>
+<h2 id="What-Is-It"><a href="#What-Is-It" class="headerlink" title="What Is It?"></a>What Is It?</h2><p>响应式编程是一种涉及到智能路由和消息处理的微架构风格，将这些所有结合起来以改变一些行为。(Reactive Programming is a style of micro-architecture involving intelligent routing and consumption of events, all combining to change behaviour.)这有点抽象，你会在网上遇到很多其他的定义。我们试图建立一些更具体的概念，说明什么是响应式编程，又或者为什么它在接下来的事情中那么重要。</p>
+<p>说起响应式编程的起源，它可以追溯到20世纪70年代甚至更早，所以这个想法并没有什么新意，但是它们确实与现代化企业中的某些东西产生了共鸣。这与微服务的兴起以及多核处理器的普及同时出现(并非偶然)。其中的缘由有望（hopefully）变得清晰。</p>
+<p>以下是从其他资源里的一些“封装”定义（useful potted definitions）：</p>
+<blockquote>
+<p>The basic idea behind reactive programming is that there are certain<br>datatypes that represent a value “over time”. Computations that<br>involve these changing-over-time values will themselves have values<br>that change over time.</p>
+</blockquote>
+<p>以及…</p>
+<blockquote>
+<p>An easy way of reaching a first intuition about what it’s like is to<br>imagine your program is a spreadsheet and all of your variables are<br>cells. If any of the cells in a spreadsheet change, any cells that<br>refer to that cell change as well. It’s just the same with FRP. Now<br>imagine that some of the cells change on their own (or rather, are<br>taken from the outside world): in a GUI situation, the position of<br>the mouse would be a good example.</p>
+</blockquote>
+<p>(摘自[Stackoverflow的讨论术语问题](<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/1028250/what-is">https://stackoverflow.com/questions/1028250/what-is</a> function -reactive-programming))</p>
+<p>FRP与高性能、并发性、异步操作和非阻塞IO密切相关。当然，我们从一开始就持怀疑的态度，认为FRP与它们中的任何一个都没有关系（这样对理解它更有帮助）。事实也的确如此，当使用响应式模型时，这些涉及点都可以很自然地被处理，它们通常对调用者是透明的。当然，有效并高效地处理这些关注点，完全取决于问题的实现方式(因此它们应该被一个高权限的监视器监控（a high degree of scrutiny）)。以同步单线程的方式实现完全健全和有用的FRP框架也是可能的，但在尝试使用任何新工具和库时，这可能不会真正有帮助。</p>
+<h2 id="Reactive-Use-Cases"><a href="#Reactive-Use-Cases" class="headerlink" title="Reactive Use Cases"></a>Reactive Use Cases</h2><p>作为一个新手，最难回答的问题似乎是“它有什么用?”下面是一些来自企业级环境的例子，它们说明了一般的使用模式:</p>
+<p><strong>外部服务调用</strong> 现在许多后台服务都是REST-ful的(即它们通过HTTP操作)，所以底层协议基本上是阻塞且同步的。FRP可能并不明显，但实际上它是一片沃土，因为这些服务的实现通常涉及调用其他服务，然后根据第一次调用的结果调用更多的服务。那么多的IO操作，如果你在发送下一个请求之前需要等待当前调用完成，那么你的可怜的客户端会在你设法收集回复之前沮丧地放弃。因此，外部服务调用，尤其是调用之间依赖关系复杂的场景，是一个需要优化的地方。FRP提供这些操作的逻辑驱动“组合化”（FRP offers the promise of “composability” of the logic driving those operations），这样开发人员能更容易得编写调用服务的代码。</p>
+<p><strong>高并发的消息消费集群（Highly Concurrent Message Consumers）</strong> 消息处理(尤其是在高并发的情况下)是常见的企业级场景。响应式框架们很喜欢权衡细微的基准测试，来吹嘘它们可以在JVM中每秒处理多少消息。结果确实令人震惊(实际上每秒数千万条消息很容易实现)，但可能有些做作——如果他们说他们只是用一个简单的for循环进行基准测试，您也不必感到惊讶。然而，我们不应该很快就把这些工作一笔略过，而且显而易见得，当事关性能时，所有的贡献都应该被感激地接受。（when performance matters, all contributions should be gratefully accepted.）响应模式天然适用于消息处理(事件可以很好地转换为消息)，因此，如果有一种方法可以更快地处理更多的消息，我们应该予以关注。</p>
+<p><strong>电子报表（Spreadsheets）</strong> 也许这并不是一个真正的企业用例，但是企业中的每个人都能和它有所联系，它也很好地体现了FRP的理念以及实现的困难程度。如果单元B依赖于单元A，而单元C同时依赖于单元A和单元B，那么在单元A更改时如何进行传播，并确保在任何更改事件发送到B之前更新C呢 ?如果你有一个真正响应式的框架来搭建，那么答案是“你不在乎，你只需要声明依赖项就好了”，这就是电子表格的强大之处。它还强调了FRP与简单事件驱动编程（simple event-driven programming）之间的区别——它使“智能路由”真正“智能”起来。</p>
+<p><strong>同异步处理的抽象</strong> 这更像是一个抽象用例，我们可能需要避免误入该领域（因为这里介绍的是Reactive而不是同异步）。这与前面提到的更具体的用例之间也有一些(或者很多)重叠，但它仍值得我们讨论。基本声明是一个熟悉的(也是合理的)例子，即只要开发人员愿意接受额外的一个抽象层，他们就可以忽略他们调用的代码是同步的还是异步的。处理异步编程需要耗费宝贵的脑细胞，在这方面可能会有一些切实可用的方法。响应式编程也不是解决这个问题的唯一方法，但是FRP的一些实现者已经对这个问题进行了足够深入的思考，而且他们的工具是可用的。</p>
+<p>Netflix博客上有一些真实场景中非常有用的用例:<a target="_blank" rel="noopener" href="http://techblog.netflix.com/2013/02/rxjava-netflix-api.html">Netflix Tech Blog: Functional Reactive in the Netflix API with RxJava</a></p>
+<h2 id="Comparisons"><a href="#Comparisons" class="headerlink" title="Comparisons"></a>Comparisons</h2><p>如果你从1970年起就没再住洞穴了，你肯定遇到过一些与响应式编程相关的概念，人们试图用它来解决各种问题。以下是我个人对这些方案的看法:</p>
+<p><em>不知为何，想起《浪潮之巅》。或许没有经历过那个年代那段岁月的人，对很多过去的事也从来都只是了解罢。长跨度的工作年限给予了他们对新兴事物更深远更直接的认知能力。而我们，却只能看到一些它们表面的样子。</em></p>
+<h3 id="Ruby-Event-Machine"><a href="#Ruby-Event-Machine" class="headerlink" title="Ruby Event-Machine"></a><strong>Ruby Event-Machine</strong></h3><p><a target="_blank" rel="noopener" href="https://github.com/eventmachine/eventmachine">Event Machine</a> 是对并发编程的一个抽象(通常涉及非阻塞IO)。他们（Rubyists）很长一段时间以来，都在努力将一种专为单线程脚本编写的语言转换成一种可以用来编写服务器应用程序的语言，使得这种语言编写的应用在服务器上可以 a) worked b) performed well c) stayed alive under load. Ruby拥有线程功能已经有一段时间了，但是它们使用得不多，而且名声也不好，因为它们的性能并不总是很好。另一种选择，现在已经无处不在，因为它(在Ruby 1.9中)已经被提升到该语言的核心，叫做<a target="_blank" rel="noopener" href="https://www.ruby-doc.org/core-1.9.3/Fiber.html">Fibers</a>(sic)。Fiber编程模型有点类似于协程(见下文)，让一个本地线程处理大量并发请求(通常涉及IO)。这个模型本身有点抽象，且难以理解，所以大多数人都使用一个包装器（wrapper），事件机（Event Machine）是最常见的。事件机并不一定使用Fibers(它抽象了那些关注点)，但是在Ruby的 web 应用程序中很容易找到使用带Fibers的事件机的代码示例(例， <a target="_blank" rel="noopener" href="https://www.igvita.com/2009/05/13/fibers-cooperative-scheduling-in-ruby">参阅Ilya Grigorik的这篇文章</a>, 或者 <a target="_blank" rel="noopener" href="https://github.com/igrigorik/em-http-request/blob/master/examples/fibered-http.rb">fibered example from em-http-request</a>)。人们经常这样做，在IO密集型应用中使用事件机可以获得可伸缩性的优势，也可以避开像嵌套回调那样难看（ugly）的模型。</p>
+<h3 id="Actor-Model"><a href="#Actor-Model" class="headerlink" title="Actor Model"></a><strong>Actor Model</strong></h3><p>类似于OOP(Object Oriented Programming),  Actor模型是20世纪70年代计算机科学的一个大分支（a deep thread of Computer Science）。Actor提供了计算之上的抽象(与数据和行为相反)，允许并发作为自然结果，因此在实践中，它们可以构成并发系统的基础。Actors 相互发送消息，所以他们在某种意义上是响应式的，在设计风格上 Actor 和 Reactive 也有很多重叠。通常情况下，区别在于它们的实现层级(比如 <code>Actors</code>中的<a target="_blank" rel="noopener" href="http://doc.akka.io/docs/akka/current/java.html">Akka</a>可以跨进程分布，这也是该框架的一个显著特征)。</p>
+<h3 id="Deferred-results-Futures"><a href="#Deferred-results-Futures" class="headerlink" title="Deferred results (Futures)"></a><strong>Deferred results (Futures)</strong></h3><p>Java 1.5引入了大量的新库，包括Doug Lea 的 “java.util.concurrent”。其中一部分提出了延迟结果的概念，封装在 <code>Future</code> 中， 这是一个对异步模式进行简单抽象的很好的例子，无需强制实现为异步，也无需使用任何特定的异步处理模型。<a target="_blank" rel="noopener" href="http://techblog.netflix.com/2013/02/rxjava-netflix-api.html">Netflix Tech Blog: Functional Reactive in the Netflix API with RxJava</a> 很好的展示了该模型, 当你需要的只是一组类似任务的并发处理，但是一旦其中任何一个任务需要彼此依赖或有条件地执行，<code>Futures</code> 将是个不错的选择, 不然你将会陷入“嵌套回调地狱”。 在这一方面上，响应式编程无疑是一剂解毒剂。</p>
+<h3 id="Map-reduce-and-fork-join"><a href="#Map-reduce-and-fork-join" class="headerlink" title="Map-reduce and fork-join"></a><strong>Map-reduce and fork-join</strong></h3><p>基于并行处理进行抽象，且它是有用的，有很多例子可供选择。 Map-reduce和fork-join最近在Java世界中得到了发展，它们是由大规模并行分布式处理驱动的(<a target="_blank" rel="noopener" href="http://research.google.com/archive/mapreduce-osdi04.pdf">MapReduce</a> 和 <a target="_blank" rel="noopener" href="https://wiki.apache.org/hadoop/MapReduce">Hadoop</a>) 以及JDK 1.7本身的(<a target="_blank" rel="noopener" href="http://gee.cs.oswego.edu/dl/papers/fj.pdf">Fork-Join</a>). 这些是有用的抽象，但与FRP相比(比如传递结果)就显得肤浅了，FRP也可以基于简单并行处理进行抽象，但它还可以延伸到可组合性和声明性通信等特性。</p>
+<h3 id="Coroutines"><a href="#Coroutines" class="headerlink" title="Coroutines"></a><strong>Coroutines</strong></h3><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B">“协程”</a>（<em>链接已替换成中文 wikipedia</em>）是“子例程”的一般化——它有一个入口点，和一个(或多个)出口点，就像子例程一样，但是当它退出时，它将控制权传递给另一个协程(不一定传递给它的调用者)， 无论它存储了什么状态，下次调用它仍然持有这些状态。协作可以构建拥有更高级别特性(如<code>Actors</code> 和<code>Streams</code>)的模块。响应式编程的目标之一是在并行处理的代理上提供可以通信的抽象，因此协程(如果可用的话)是一个有用的构建块。协程有许多不同的风格，其中一些比一般情况更有限制，但是比普通子程序更灵活。Fibers(请参阅关于事件机的讨论)就是一种风格，Generators (Scala和Python中常见)是另一种风格。</p>
+<blockquote>
+<p>由于协程不如子例程那样被普遍所知，最好对它们作个比较。</p>
+<p>子例程的起始处是惟一的入口点，一旦退出即完成了子例程的执行，子例程的一个实例只会返回一次。</p>
+<p>协程可以通过yield来调用其它协程。通过yield方式转移执行权的协程之间不是调用者与被调用者的关系，而是彼此对称、平等的。</p>
+<p>协程的起始处是第一个入口点，在协程里，返回点之后是接下来的入口点。子例程的生命期遵循后进先出（最后一个被调用的子例程最先返回）；相反，协程的生命期完全由他们的使用的需要决定。</p>
+<p>这里是一个简单的例子证明协程的实用性。假设你有一个生产者－消费者的关系，这里一个协程生产产品并将它们加入队列，另一个协程从队列中取出产品并使用它。为了提高效率，你想一次增加或删除多个产品。代码可能是这样的：</p>
+<p>var q :&#x3D; new queue</p>
+<p>生产者协程</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">loop</span><br><span class="line">    <span class="keyword">while</span> q is not full</span><br><span class="line">        create some <span class="keyword">new</span> items</span><br><span class="line">        add the items to q</span><br><span class="line">    <span class="keyword">yield</span> to consume</span><br></pre></td></tr></table></figure>
+
+<p>消费者协程</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">loop</span><br><span class="line">    <span class="keyword">while</span> q is not empty</span><br><span class="line">        remove some items <span class="keyword">from</span> q</span><br><span class="line">        use the items</span><br><span class="line">    <span class="keyword">yield</span> to produce</span><br></pre></td></tr></table></figure>
+
+<p>每个协程在用yield命令向另一个协程交出控制时都尽可能做了更多的工作。放弃控制使得另一个例程从这个例程停止的地方开始，但因为现在队列被修改了所以他可以做更多事情。尽管这个例子常用来介绍多线程，实际没有必要用多线程实现这种动态：yield语句可以通过由一个协程向另一个协程直接分支的方式实现。</p>
+</blockquote>
+<p><em>摘抄于维基百科</em></p>
+<h2 id="Reactive-Programming-in-Java"><a href="#Reactive-Programming-in-Java" class="headerlink" title="Reactive Programming in Java"></a>Reactive Programming in Java</h2><p>Java并不是一门“reactive language”，因为它本身并不支持协程。JVM上还有其他语言(Scala和Clojure)更原生地支持响应式模型，Java本身直到版本9才支持。然而，Java是企业开发的一个强大工具，最近在JDK之上提供了许多响应式层（Reactive layers）。这里我们只简单地看一下其中的一小部分。</p>
+<p><a target="_blank" rel="noopener" href="http://www.reactive-streams.org/"><strong>Reactive Streams</strong></a> 是一个非常底层的约定，表示为一部分Java接口(加上TCK)，但也适用于其他语言。这些接口以显式的背压（back pressure）表达了 <code>Publisher</code> 和<code>Subscriber</code> 等基本构件，形成了可互操作库的通用语言。Reactive Streams 已经作为“java.util.concurrent.Flow”合并到JDK9中。该项目由Kaazing、Netflix、Pivotal、Red Hat、Twitter、Typesafe等公司的工程师合作完成。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ReactiveX/RxJava/wiki"><strong>RxJava</strong></a>: Netflix在内部使用响应式模式已经有一段时间了，然后他们发布了在开源许可下使用的工具<a target="_blank" rel="noopener" href="https://github.com/ReactiveX/RxJava/wiki">Netflix&#x2F;RxJava</a> (随后更名为“ReactiveX&#x2F;RxJava”). Netflix基于RxJava用Groovy做了很多编程工作，但是它对Java的使用是开放的，并且非常适合Java 8使用Lambdas。有一个<a target="_blank" rel="noopener" href="https://github.com/ReactiveX/RxJavaReactiveStreams">bridge to Reactive Streams</a>。根据David Karnok的[Generation of Reactive](<a target="_blank" rel="noopener" href="https://akarnokd.blogspot.co.uk/2016/03/operator-">https://akarnokd.blogspot.co.uk/2016/03/operator-</a> fu-part -1.html)讲述，RxJava已是一个“第二代”库。</p>
+<p><a target="_blank" rel="noopener" href="https://projectreactor.io/"><strong>Reactor</strong></a>是<a target="_blank" rel="noopener" href="http://www.gopivotal.com/oss">Pivotal</a>开源团队(创建Spring的团队)开发的Java框架。它直接构建在 Reactive Streams 之上，因此不需要桥接。Reactor IO 项目为 Netty 和 Aeron 等底层网络运行环境提供了包装器。根据 David Karnok 的[Generation of Reactive](<a target="_blank" rel="noopener" href="https://akarnokd.blogspot.co.uk/2016/03/operator-">https://akarnokd.blogspot.co.uk/2016/03/operator-</a> fu-part -1.html)讲述，Reactor已是一个“第四代”库。</p>
+<p><a target="_blank" rel="noopener" href="https://projects.spring.io/spring-framework/"><strong>Spring Framework 5.0</strong></a>(2016年6月创建第一个里程碑)中内置了 Reactive 特性，包括用于构建HTTP服务器和客户机的工具。web层，Spring的现有用户能看出这是一个非常熟悉的模型，该模型使用注释修饰 controller 来处理HTTP请求，在很大程度上将响应式请求的调度和压力问题传递给框架。Spring基于Reactor搭建，但也公开了api，这些api允许使用选择其他的库(例如 Reactor 或 RxJava )来实现该特性。用户可以从 Tomcat、Jetty、Netty(通过Reactor IO)和 Undertow 中选择服务器端容器栈。</p>
+<p><a target="_blank" rel="noopener" href="https://ratpack.io/"><strong>Ratpack</strong></a>是一组通过HTTP构建高性能服务的库。它在Netty的基础上，实现了互操作性强的Reactive Streams(例如，你可以使用堆栈之上接着使用其他的Reactive Streams实现)。在Spring中作为组件受到支持，可以使用一些简单的 utility 类来实现依赖注入。也有一些自动配置让 Spring Boot 用户将Ratpack嵌入到Spring应用中，打开HTTP端点并监听，而不是使用嵌入式服务器。</p>
+<p><a target="_blank" rel="noopener" href="http://akka.io/"><strong>Akka</strong></a>是一个使用Scala或Java中的构建程序的工具包，使用 <code>Actor</code> 模式，使用 Akka Streams 进行进程间通信，并内置了Reactive Streams 合约。根据David Karnok的[Generation of Reactive](<a target="_blank" rel="noopener" href="https://akarnokd.blogspot.co.uk/2016/03/operator-">https://akarnokd.blogspot.co.uk/2016/03/operator-</a> fu-part -1.html)介绍，Akka已是一个“第三代”库。</p>
+<h2 id="Why-Now"><a href="#Why-Now" class="headerlink" title="Why Now?"></a>Why Now?</h2><p>是什么推动了 Reactive 在企业级Java中的崛起?嗯，这不仅仅是一种技术潮流——人们喜欢带着闪闪发光的新玩具赶时髦。根本因素是有效的资源利用，换句话说，就是在服务器和数据中心上花更少的钱。Reactive 的 promise （<em>或许这里只是广义的promise</em>）让你可以用更少的资源做更多的事情，特别是可以用更少的线程处理更高的负载。这就是响应式和非阻塞式异步IO的交集出现的地方。在正确的方向上，其效果是显著的。而在错误的方向上，效果可能会逆转(实际上会让事情变得更糟)。还请记住，即使你选择了正确的方向，天底下也没有免费的午餐，Reactive 并不能为你解决问题，它只是为你提供了一个工具箱，你可以使用它来实现你自己的解决方案。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>在本文中，我们对 Reactive 运动进行了非常广泛和高层次的研究，并将其置于现代企业级环境中讨论。JVM有许多 Reactive 库或框架，也都在积极开发中。在很大程度上，它们提供了类似的特性，也多亏于Reactive Streams，它们越来越具有协作性（interoperable）。在<a target="_blank" rel="noopener" href="https://spring.io/blog/2016/06/13/notes-on-reactive-programming-part-ii-writing-some-code">下一篇文章</a>中，我们将深入研究一些实际的代码示例，以更好地了解 Reactive 意味着什么以及为什么 Reactive 很重要。我们还将花一些时间来理解为什么FRP中的“F”很重要，以及背压和非阻塞代码的概念如何对编程风格产生深远影响。最重要的是，我们将帮助您决定何时以及如何拥抱 Reactive，以及何时继续使用旧风格和旧堆栈环境。</p>
+<p><em>是不是突然更感兴趣了？哈哈。</em></p>
+
+
+  </article>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <div class="busuanzi center">
+    page PV:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    site PV:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    site UV:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <style>
+        .vcard .vimg{left:0;}
+        </style>
+        <div id="vcomment" class="vcomment" style="padding:0 6% 0 7%;"></div>
+        <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        <script>
+            var GUEST_INFO = ['nick','mail','link'];
+            var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+                return GUEST_INFO.indexOf(item) > -1
+            });
+            var notify = 'false' == true;
+            var verify = 'false' == true;
+            var valine = new Valine();
+            valine.init({
+                el: '.vcomment',
+                notify: notify,
+                verify: verify,
+                appId: "EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz",
+                appKey: "7oXQjRGMPLzwU8KFGgx6Nvdr",
+                placeholder: "请发布你的评论:D",
+                pageSize:'10',
+                avatar:'mm',
+                lang:'zh-cn'
+            })
+        </script>
+    
+
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Fchange 2016-2024
+    </div>
+    <div class="secondrow">
+        <a target="_blank" rel="noopener" href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  
+  <title>别急着上多 Agent | Fchange</title>
+  <meta name="author" content="Fchange">
+  <meta name="description" content="最近看了 Cognition 的一篇文章：Don’t Build Multi-Agents。 我比较认同它的核心判断，不过重点不是“多 agent 永远不行”，而是一个更现实的问题： 在今天这个阶段，多 agent 最大的问题不是不会分工，而是共享不了稳定、完整的上下文。 简单说就是： 看起来大家都">
+  
+  <meta property="og:site_name" content="Fchange">
+  <meta property="og:title" content="别急着上多 Agent | Fchange">
+  <meta property="og:description" content="最近看了 Cognition 的一篇文章：Don’t Build Multi-Agents。 我比较认同它的核心判断，不过重点不是“多 agent 永远不行”，而是一个更现实的问题： 在今天这个阶段，多 agent 最大的问题不是不会分工，而是共享不了稳定、完整的上下文。 简单说就是： 看起来大家都">
+  <meta property="og:type" content="article">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="alternate" href="/atom.xml" title="Fchange" type="application/atom+xml">
+  <link rel="alternate" href="/rss.xml" title="Fchange" type="application/rss+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="is-post">
+  <a id="top"></a>
+  <div class="site-shell">
+    
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-brand" href="/" aria-label="Fchange">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+        <path d="M8 9l-3 3 3 3"></path>
+        <path d="M13 16h5"></path>
+      </svg>
+      <span class="site-brand-text">Wenyan</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      
+        <a href="/">文章</a>
+      
+        <a href="/archives/">归档</a>
+      
+        <a href="/about/">关于</a>
+      
+    </nav>
+
+    <div class="site-social">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/fchange/">Github</a>
+      
+        <a href="/atom.xml">RSS</a>
+      
+        <a href="/links/">友情链接</a>
+      
+        <a href="/photo/">相册</a>
+      
+    </div>
+  </div>
+</header>
+
+    <div class="site-main">
+      
+<section class="post-shell">
+  <article class="post-article">
+    <header class="post-header">
+      <h1 class="post-title">别急着上多 Agent</h1>
+      <p class="post-meta">
+        <time datetime="2026-04-24T00:00:00.000Z">2026-04-24</time>
+        <span>·</span><span>2687 字</span>
+      </p>
+    </header>
+
+    <div class="post-content">
+      <p>最近看了 Cognition 的一篇文章：<a target="_blank" rel="noopener" href="https://cognition.ai/blog/dont-build-multi-agents#applying-the-principles">Don’t Build Multi-Agents</a>。</p>
+<p>我比较认同它的核心判断，不过重点不是“多 agent 永远不行”，而是一个更现实的问题：</p>
+<p><strong>在今天这个阶段，多 agent 最大的问题不是不会分工，而是共享不了稳定、完整的上下文。</strong></p>
+<p>简单说就是：</p>
+<ul>
+<li>看起来大家都在做事</li>
+<li>实际上大家理解的不是同一件事</li>
+<li>最后再把这些结果拼起来，系统就开始变脆</li>
+</ul>
+<p>所以很多 agent demo 看起来很热闹，但一上复杂任务就容易散架。</p>
+<h2 id="为什么看起来可行"><a href="#为什么看起来可行" class="headerlink" title="为什么看起来可行"></a>为什么看起来可行</h2><p>多 agent 这件事，第一眼看上去是合理的。</p>
+<p>一个大任务拆成多个子任务，然后让不同 agent 并行去做，最后再汇总结果。这个思路在人的协作里也成立，在分布式系统里也成立，所以它天然很有吸引力。</p>
+<p>例如一个“做一个 Flappy Bird 克隆”的任务，你很容易会这样拆：</p>
+<ul>
+<li>一个 agent 负责背景和障碍物</li>
+<li>一个 agent 负责小鸟和交互</li>
+<li>最后一个 agent 负责把它们合起来</li>
+</ul>
+<p>大概就是这样：</p>
+<p><img src="/blogimg/2026/cognition-multi-agent-fragile.png"></p>
+<p>问题在于，这种结构虽然“像是在提效”，但它对前提条件要求很高。</p>
+<p>你默认每个 agent 都准确理解了任务。<br>你默认它们对风格、边界、目标、约束的理解是一致的。<br>你默认最后那个汇总 agent 有能力把前面所有偏差都修平。</p>
+<p>可实际情况往往不是这样。一个 agent 理解成了马里奥风格的背景，另一个 agent 做出来的小鸟像别的游戏素材。单看都不算全错，但拼起来就是不对。</p>
+<p>问题不在于单个 agent 能力差，而是<strong>任务一旦拆开，误解也会被拆开，而且会互相放大。</strong></p>
+<h2 id="第一个问题"><a href="#第一个问题" class="headerlink" title="第一个问题"></a>第一个问题</h2><p>很多人第一反应会觉得，那就把原始任务也传给每个子 agent 就好了。</p>
+<p>听上去合理，但工程上往往没这么简单。</p>
+<p>因为真实系统里的上下文，从来不只是用户最开始那一句需求。</p>
+<p>它通常还包括：</p>
+<ul>
+<li>前面几轮对话里澄清过的细节</li>
+<li>agent 通过工具调用拿到的信息</li>
+<li>中途已经做出的设计决策</li>
+<li>某些没明说但已经默认成立的约束</li>
+</ul>
+<p>所以你给子 agent 的，很多时候不是完整上下文，而是主 agent 处理过的一段“任务摘要”。而摘要本身就会丢信息。</p>
+<p>原文在这里给出的第一个原则，我觉得很值得记住：</p>
+<blockquote>
+<p>尽量共享完整上下文，最好共享完整 trace，而不只是某几条消息。</p>
+</blockquote>
+<p>图是这样的：</p>
+<p><img src="/blogimg/2026/cognition-shared-context.png"></p>
+<p>这个原则说白了就是一句话：<strong>不要以为传了一段说明，就等于传递了原本的理解过程。</strong></p>
+<p>对 agent 来说，很多关键决策并不写在最终消息里，而是藏在前面的推理、工具调用和取舍过程里。少掉这些，子 agent 拿到的就只是一个“差不多”的版本。</p>
+<h2 id="第二个问题"><a href="#第二个问题" class="headerlink" title="第二个问题"></a>第二个问题</h2><p>但就算已经尽量把上下文共享出去了，问题也不一定就没了。</p>
+<p><strong>很多决定，并不是显式写出来的，而是通过动作本身被做掉了。</strong></p>
+<p>比如一个 agent 开始写某种 UI 结构，选了某种代码组织方式，或者默认了某个 API 契约。它虽然没专门说“我决定这样做”，但这个决定已经发生了。</p>
+<p>这时候如果另一个 agent 在并行做别的部分，并基于另一套假设往前推进，最后冲突几乎是必然的。</p>
+<p>原文里把这个问题总结成一句话，我觉得挺准：</p>
+<p><strong>Actions carry implicit decisions.</strong></p>
+<p>也就是：</p>
+<p><strong>动作会携带隐式决策。</strong></p>
+<p>这点很像真实工程开发。两个工程师如果没有同步设计约束，分别写自己那部分代码，最后合并时经常会发现：</p>
+<ul>
+<li>命名体系不一致</li>
+<li>数据结构假设不一致</li>
+<li>错误处理方式不一致</li>
+<li>UI 风格不一致</li>
+<li>依赖边界不一致</li>
+</ul>
+<p>这还不是因为谁写得差，而是因为每个人在推进时，都顺手做了一些本该共享的决定。</p>
+<p>人类团队还能靠开会、评审、文档来补这一层，但 agent 现在在这方面还差得远。</p>
+<h2 id="为什么我更倾向单线程"><a href="#为什么我更倾向单线程" class="headerlink" title="为什么我更倾向单线程"></a>为什么我更倾向单线程</h2><p>如果按上面这个思路往下看，那我还是会更倾向单线程。<strong>在很多真正要求可靠性的任务里，单线程 agent 反而更稳。</strong></p>
+<p>结构很简单，就是一条连续上下文往前走：</p>
+<p><img src="/blogimg/2026/cognition-linear-agent.png"></p>
+<p>它不炫，也没有“多个 agent 同时工作”的观感优势。但它有一个很实际的优点：</p>
+<p><strong>上下文是连续的，决策链路也是连续的。</strong></p>
+<p>你不需要担心某个子 agent 少拿了一段背景。<br>也不需要担心另一个子 agent 在你看不到的地方做了冲突决策。</p>
+<p>很多时候，系统的稳定性不是来自“分工更细”，而是来自“决策没有断层”。</p>
+<p>在 agent 系统里，可靠性通常先于并行度。如果连一致性都保不住，那么并行只是在更快地产生冲突。</p>
+<h2 id="单线程的问题在哪"><a href="#单线程的问题在哪" class="headerlink" title="单线程的问题在哪"></a>单线程的问题在哪</h2><p>当然，单线程 agent 也不是没有问题。最直接的还是 context window。</p>
+<p>任务一长、步骤一多、历史一累积，就很容易顶到上下文上限。</p>
+<p>这里的图也很直观：</p>
+<p><img src="/blogimg/2026/cognition-context-limit.png"></p>
+<p>这个问题在短任务里不明显，但在长周期任务里会很快出现。比如：</p>
+<ul>
+<li>连续多轮的编码任务</li>
+<li>大仓库里的渐进式修改</li>
+<li>需要长时间维护状态的自动化工作流</li>
+</ul>
+<p>这时候你会发现，单线程虽然稳，但它也会“记不住”。</p>
+<p>所以真正的问题并不是“单 agent 还是多 agent”，而是：</p>
+<p><strong>当上下文变长之后，系统怎么继续保住关键决策。</strong></p>
+<h2 id="还有什么办法"><a href="#还有什么办法" class="headerlink" title="还有什么办法"></a>还有什么办法</h2><p>我觉得这篇文章比较有价值的地方，不只是批评多 agent，而是也给了一个方向：</p>
+<p><strong>不要急着把决策拆给多个并行 agent，先想办法把已有决策压缩好、继承好。</strong></p>
+<p>图示如下：</p>
+<p><img src="/blogimg/2026/cognition-context-compression.png"></p>
+<p>这里的核心思想是增加一层“上下文压缩”能力，把长历史里的关键事件、关键约束、关键决策提炼出来，再继续传给后续步骤。</p>
+<p>这个方向的好处是，它解决的是更本质的问题：</p>
+<ul>
+<li>什么信息必须被保留</li>
+<li>什么决策会影响后续动作</li>
+<li>什么上下文不能在压缩时丢掉</li>
+</ul>
+<p>这件事其实比“把任务拆成三份并行跑”更难，但也更接近真实可用系统要面对的问题。</p>
+<p>因为真正让 agent 失控的，很多时候不是模型不会写，而是系统没有把过去做过的判断保留下来。</p>
+<h2 id="为什么我认同这个说法"><a href="#为什么我认同这个说法" class="headerlink" title="为什么我认同这个说法"></a>为什么我认同这个说法</h2><p>因为这件事和普通工程经验其实是对得上的。</p>
+<p>我们做系统设计时，通常不会默认“模块越多越高级”。相反，大家会很警惕下面这些问题：</p>
+<ul>
+<li>状态同步成本</li>
+<li>跨模块沟通损耗</li>
+<li>决策边界不清</li>
+<li>接口语义漂移</li>
+<li>最后集成阶段的隐性冲突</li>
+</ul>
+<p>多 agent 的问题，本质上没有脱离这些经典工程问题。只是以前这些问题发生在人和服务之间，现在发生在 agent 和 agent 之间。</p>
+<p>所以我现在更倾向于把 agent 系统理解成这样：</p>
+<ul>
+<li>真正重要的是 context engineering</li>
+<li>并行只是可选优化，不是默认答案</li>
+<li>如果共享不了完整上下文，就不要过早把决策拆开</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后简单收一下：</p>
+<ul>
+<li>多 agent 最大的问题，不是调度，而是上下文共享不完整</li>
+<li>真正危险的，不只是消息传丢了，而是隐式决策彼此冲突</li>
+<li>在今天这个阶段，单线程 agent 往往比并行多 agent 更稳</li>
+<li>当单线程开始受限时，更优先该补的是上下文压缩与继承能力，而不是贸然加更多 agent</li>
+</ul>
+<p>这不意味着多 agent 没有未来。</p>
+<p>而是至少在现在，很多系统还没把“共享理解”这件事解决好，就已经开始追求“并行执行”了。从工程角度看，这个顺序大概率是反的。</p>
+<p>先把一致性问题解决，再谈并行，通常会稳很多。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://cognition.ai/blog/dont-build-multi-agents#applying-the-principles">Cognition: Don’t Build Multi-Agents</a></li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <style>
+        .vcard .vimg{left:0;}
+        </style>
+        <div id="vcomment" class="vcomment" style="padding:0 6% 0 7%;"></div>
+        <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        <script>
+            var GUEST_INFO = ['nick','mail','link'];
+            var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+                return GUEST_INFO.indexOf(item) > -1
+            });
+            var notify = 'false' == true;
+            var verify = 'false' == true;
+            var valine = new Valine();
+            valine.init({
+                el: '.vcomment',
+                notify: notify,
+                verify: verify,
+                appId: "EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz",
+                appKey: "7oXQjRGMPLzwU8KFGgx6Nvdr",
+                placeholder: "请发布你的评论:D",
+                pageSize:'10',
+                avatar:'mm',
+                lang:'zh-cn'
+            })
+        </script>
+    
+
+
+  </article>
+
+  
+    <aside class="post-sidebar">
+      <div class="post-sidebar-inner">
+        <h2>目录</h2>
+        <div class="post-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%9C%8B%E8%B5%B7%E6%9D%A5%E5%8F%AF%E8%A1%8C"><span class="toc-text">为什么看起来可行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">第一个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">第二个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E6%9B%B4%E5%80%BE%E5%90%91%E5%8D%95%E7%BA%BF%E7%A8%8B"><span class="toc-text">为什么我更倾向单线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%97%AE%E9%A2%98%E5%9C%A8%E5%93%AA"><span class="toc-text">单线程的问题在哪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E6%9C%89%E4%BB%80%E4%B9%88%E5%8A%9E%E6%B3%95"><span class="toc-text">还有什么办法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E8%AE%A4%E5%90%8C%E8%BF%99%E4%B8%AA%E8%AF%B4%E6%B3%95"><span class="toc-text">为什么我认同这个说法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></div>
+        <a class="back-top-link" href="#top">返回顶部</a>
+      </div>
+    </aside>
+  
+</section>
+
+    </div>
+    
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-copy">© Fchange 2016-2026</div>
+    <div class="site-footer-links">
+      <a href="#top">返回顶部</a>
+      
+        <a target="_blank" rel="noopener" href="https://github.com/guangzhengli/nextjs-blog-template">参考主题</a>
+      
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <script src="/js/theme.js"></script>
+
+</body>
+</html>

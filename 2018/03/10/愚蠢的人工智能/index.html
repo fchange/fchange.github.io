@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  
+  <title>愚蠢的人工智能 | Fchange</title>
+  <meta name="author" content="Fchange">
+  <meta name="description" content="因为毕设想试着弄一弄机器学习的项目，曾有幸花了两个多月的时间学习了下机器学习，这里要感谢台湾大学的李宏毅老师，他发布的一系列机器学习的课程视频让我受益匪浅。">
+  
+  <meta property="og:site_name" content="Fchange">
+  <meta property="og:title" content="愚蠢的人工智能 | Fchange">
+  <meta property="og:description" content="因为毕设想试着弄一弄机器学习的项目，曾有幸花了两个多月的时间学习了下机器学习，这里要感谢台湾大学的李宏毅老师，他发布的一系列机器学习的课程视频让我受益匪浅。">
+  <meta property="og:type" content="article">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="alternate" href="/atom.xml" title="Fchange" type="application/atom+xml">
+  <link rel="alternate" href="/rss.xml" title="Fchange" type="application/rss+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="is-post">
+  <a id="top"></a>
+  <div class="site-shell">
+    
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-brand" href="/" aria-label="Fchange">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+        <path d="M8 9l-3 3 3 3"></path>
+        <path d="M13 16h5"></path>
+      </svg>
+      <span class="site-brand-text">Wenyan</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      
+        <a href="/">文章</a>
+      
+        <a href="/archives/">归档</a>
+      
+        <a href="/about/">关于</a>
+      
+    </nav>
+
+    <div class="site-social">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/fchange/">Github</a>
+      
+        <a href="/atom.xml">RSS</a>
+      
+        <a href="/links/">友情链接</a>
+      
+        <a href="/photo/">相册</a>
+      
+    </div>
+  </div>
+</header>
+
+    <div class="site-main">
+      
+<section class="post-shell">
+  <article class="post-article">
+    <header class="post-header">
+      <h1 class="post-title">愚蠢的人工智能</h1>
+      <p class="post-meta">
+        <time datetime="2018-03-10T00:00:00.000Z">2018-03-10</time>
+        <span>·</span><span>708 字</span>
+      </p>
+    </header>
+
+    <div class="post-content">
+      <p>因为毕设想试着弄一弄机器学习的项目，曾有幸花了两个多月的时间学习了下机器学习，这里要感谢台湾大学的李宏毅老师，他发布的一系列机器学习的课程视频让我受益匪浅。</p>
+<span id="more"></span>
+<h2 id="人工智能是怎么学习的"><a href="#人工智能是怎么学习的" class="headerlink" title="人工智能是怎么学习的"></a>人工智能是怎么学习的</h2><p>了解了一下人工智能的朋友都会知道一个词，叫做“神经网络”，它是模仿人类的大脑神经来学习事物特征的。通过提取图片各个位置的各个特征，并不断强化具现特征及弱化非具现特征，完成对图像识别的学习。</p>
+<h2 id="人工智能的发展"><a href="#人工智能的发展" class="headerlink" title="人工智能的发展"></a>人工智能的发展</h2><p>其实很早以前，便有了机器学习的概念，但是碍于数据集大小的限制,很难训练出与各种算法的正确度匹敌的策略。<br>这两年的发展，便是依托于大数据的快速发展，还有计算机显卡硬件的浮点运算能力的爆发。<br>这里还需要提一个人，Google的李飞飞，她推动的目前世界上图像识别最大的数据库—ImageNet的发展。</p>
+<h2 id="人工智能是愚蠢的"><a href="#人工智能是愚蠢的" class="headerlink" title="人工智能是愚蠢的"></a>人工智能是愚蠢的</h2><p>有一个很简单的例子，你训练机器去识别一套关于马术比赛的图片，让它认识马，也许它到头来只是学到了认识某张图右下角批注，看看那张图是不是有特定特征的批注，来识别这张图是不是马。显然，这并不是我们训练它识别的初衷。它很会投机取巧不是吗？</p>
+<h2 id="其实，它还是个婴儿"><a href="#其实，它还是个婴儿" class="headerlink" title="其实，它还是个婴儿"></a>其实，它还是个婴儿</h2><p>我在上面讲到的例子，已经有了解决它的方案了–给予一个attention向量，让机器更趋向于学习图像中间位置的特征（或者别的方式，这里只提一个引子）。<br>我想说的是，人工智能，还在疯狂的发展阶段，即使现在它已经火得一塌糊涂，它仍然还只是个婴儿，那么，你又奢望一个婴儿作些什么呢?</p>
+<blockquote>
+<p>夫人，刚出生的婴儿又有什么用呢?</p>
+</blockquote>
+<p>纵使它还是个婴儿，但我们仍然对它寄予厚望，至于它以后会是什么样，谁又知道呢。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>或许我这篇文章写得太激进，太放肆，太妄自菲薄了。我愿虚心接受批评，也希望喷子们能高抬贵手，放我一回。</p>
+
+    </div>
+
+    
+
+    
+        <style>
+        .vcard .vimg{left:0;}
+        </style>
+        <div id="vcomment" class="vcomment" style="padding:0 6% 0 7%;"></div>
+        <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        <script>
+            var GUEST_INFO = ['nick','mail','link'];
+            var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+                return GUEST_INFO.indexOf(item) > -1
+            });
+            var notify = 'false' == true;
+            var verify = 'false' == true;
+            var valine = new Valine();
+            valine.init({
+                el: '.vcomment',
+                notify: notify,
+                verify: verify,
+                appId: "EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz",
+                appKey: "7oXQjRGMPLzwU8KFGgx6Nvdr",
+                placeholder: "请发布你的评论:D",
+                pageSize:'10',
+                avatar:'mm',
+                lang:'zh-cn'
+            })
+        </script>
+    
+
+
+  </article>
+
+  
+    <aside class="post-sidebar">
+      <div class="post-sidebar-inner">
+        <h2>目录</h2>
+        <div class="post-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%98%AF%E6%80%8E%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%9A%84"><span class="toc-text">人工智能是怎么学习的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%9A%84%E5%8F%91%E5%B1%95"><span class="toc-text">人工智能的发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%98%AF%E6%84%9A%E8%A0%A2%E7%9A%84"><span class="toc-text">人工智能是愚蠢的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%9E%EF%BC%8C%E5%AE%83%E8%BF%98%E6%98%AF%E4%B8%AA%E5%A9%B4%E5%84%BF"><span class="toc-text">其实，它还是个婴儿</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-text">后记</span></a></li></ol></div>
+        <a class="back-top-link" href="#top">返回顶部</a>
+      </div>
+    </aside>
+  
+</section>
+
+    </div>
+    
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-copy">© Fchange 2016-2026</div>
+    <div class="site-footer-links">
+      <a href="#top">返回顶部</a>
+      
+        <a target="_blank" rel="noopener" href="https://github.com/guangzhengli/nextjs-blog-template">参考主题</a>
+      
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <script src="/js/theme.js"></script>
+
+</body>
+</html>

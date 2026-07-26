@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  
+  <title>别急着上多 Agent | Fchange</title>
+  <meta name="author" content="Fchange">
+  <meta name="description" content="多 Agent 最大的问题不是不会分工，而是共享不了稳定、完整的上下文。任务一旦拆开，误解也会被拆开，并在汇总时互相放大。">
+  <meta name="keywords" content="软件工程, Golang, AI, 云原生">
+  <meta property="og:site_name" content="Fchange">
+  <meta property="og:title" content="别急着上多 Agent | Fchange">
+  <meta property="og:description" content="多 Agent 最大的问题不是不会分工，而是共享不了稳定、完整的上下文。任务一旦拆开，误解也会被拆开，并在汇总时互相放大。">
+  <meta property="og:type" content="article">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="alternate" href="/atom.xml" title="Fchange" type="application/atom+xml">
+  <link rel="alternate" href="/rss.xml" title="Fchange" type="application/rss+xml">
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('wenyan-theme'); } catch (error) {}
+      if (!saved) {
+        var match = document.cookie.match(/(?:^|; )wenyan-theme=(light|dark)/);
+        saved = match && match[1];
+      }
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <style>:root { --accent-source: #b33a2b; }</style>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="is-post has-header-motion has-sketch" style="--header-motion-duration: 500ms" data-copy-label="复制" data-copied-label="已复制" data-copy-failed-label="复制失败" data-light-theme-label="切换到浅色主题" data-dark-theme-label="切换到深色主题">
+  <a id="top"></a>
+  
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <filter id="sketch" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.062" numOctaves="1" seed="0" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+  
+  <div class="site-shell">
+    
+<header class="site-header">
+  <div class="site-header-inner">
+    <button class="mobile-menu-button" type="button" aria-label="Toggle menu" aria-controls="mobile-navigation" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+    </button>
+    <a class="site-brand" href="/" aria-label="首页" title="首页">
+      <svg class="pen-logo" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M8.2 24.7 5.8 26l1.3-2.4L21.8 8.9l1.1-.3 1.8 1.8-.3 1.1Z"/>
+        <path d="m19.8 10.9 3.8 3.8M8.2 24.7l-1.1-1.1M22.9 8.6l1.6-1.6a1.8 1.8 0 0 1 2.5 0l.9.9a1.8 1.8 0 0 1 0 2.5l-1.6 1.6"/>
+        <path d="M6 28h20"/>
+      </svg>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      
+        <a href="/" class="is-active" aria-current="page"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span><span>文章</span></a>
+      
+        <a href="/archives/"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v12h14V8M10 12h4"/></svg></span><span>归档</span></a>
+      
+        <a href="/links/"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></span><span>友链</span></a>
+      
+        <a href="/photo/"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></span><span>相册</span></a>
+      
+        <a href="/about/"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span><span>关于</span></a>
+      
+    </nav>
+
+    <div class="site-social">
+      
+        <a class="icon-link" target="_blank" rel="noopener" href="https://github.com/fchange/" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.4 4 5 5 0 0 0 19.3.5S18.2.1 15 2a13.4 13.4 0 0 0-7 0C4.8.1 3.7.5 3.7.5A5 5 0 0 0 3.6 4a5.4 5.4 0 0 0-1.4 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 8 18v4M8 19c-3 .9-3-1.5-4-2"/></svg></a>
+      
+        <a class="icon-link" href="/atom.xml" aria-label="RSS" title="RSS"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a>
+      
+      
+        <button class="search-toggle" type="button" aria-label="搜索" title="搜索">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        </button>
+      
+      <button class="theme-toggle" type="button" aria-label="切换到深色主题" title="切换到深色主题">
+        <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu-backdrop" hidden></div>
+  <nav class="mobile-navigation" id="mobile-navigation" aria-label="Mobile navigation" aria-hidden="true">
+    <button class="mobile-menu-close" type="button" aria-label="Close menu">×</button>
+    
+      <a href="/" class="is-active" aria-current="page"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span><span>文章</span></a>
+    
+      <a href="/archives/"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v12h14V8M10 12h4"/></svg></span><span>归档</span></a>
+    
+      <a href="/links/"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></span><span>友链</span></a>
+    
+      <a href="/photo/"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></span><span>相册</span></a>
+    
+      <a href="/about/"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span><span>关于</span></a>
+    
+  </nav>
+  
+  <div class="search-dialog" role="dialog" aria-modal="true" aria-labelledby="search-title" hidden>
+    <button class="search-backdrop" type="button" aria-label="关闭搜索"></button>
+    <div class="search-panel">
+      <div class="search-panel-header">
+        <h2 id="search-title">搜索</h2>
+        <button class="search-close" type="button" aria-label="关闭搜索" title="关闭搜索">×</button>
+      </div>
+      <form class="search-form" action="https://www.google.com/search" method="get" target="_blank">
+        <input type="hidden" name="sitesearch" value="https://fchange.github.io">
+        <label class="sr-only" for="site-search-input">搜索</label>
+        <input id="site-search-input" name="q" type="search" autocomplete="off" required placeholder="搜索本站内容">
+        <button type="submit">搜索</button>
+      </form>
+      <p>搜索结果将在 Google 站内搜索中打开。</p>
+    </div>
+  </div>
+
+
+</header>
+
+    <div class="site-main">
+      
+<section class="post-shell">
+  <article class="post-article">
+    <header class="post-header">
+      
+<h1 class="post-title">
+  
+  别急着上多 Agent
+  
+  
+</h1>
+
+      
+<div class="post-meta">
+  <time datetime="2026-04-24T00:00:00.000Z">2026-04-24</time>
+  <span aria-hidden="true">·</span><span>2687 字</span>
+  
+    <span aria-hidden="true">·</span>
+    <span class="post-taxonomy" aria-label="分类">
+      <a href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
+    </span>
+  
+  
+    <span aria-hidden="true">·</span>
+    <span class="post-taxonomy post-tags" aria-label="标签">
+      <a href="/tags/AI/">#AI</a><a href="/tags/Agent/">#Agent</a><a href="/tags/LLM/">#LLM</a>
+    </span>
+  
+  
+    <span class="post-views" id="busuanzi_container_page_pv" style="display: none"><span aria-hidden="true">·</span> <span id="busuanzi_value_page_pv"></span> 次阅读</span>
+  
+</div>
+
+    </header>
+
+    <div class="post-content">
+      <p>最近看了 Cognition 的一篇文章：<a target="_blank" rel="noopener" href="https://cognition.ai/blog/dont-build-multi-agents#applying-the-principles">Don’t Build Multi-Agents</a>。</p>
+<p>我比较认同它的核心判断，不过重点不是“多 agent 永远不行”，而是一个更现实的问题：</p>
+<p><strong>在今天这个阶段，多 agent 最大的问题不是不会分工，而是共享不了稳定、完整的上下文。</strong></p>
+<p>简单说就是：</p>
+<ul>
+<li>看起来大家都在做事</li>
+<li>实际上大家理解的不是同一件事</li>
+<li>最后再把这些结果拼起来，系统就开始变脆</li>
+</ul>
+<p>所以很多 agent demo 看起来很热闹，但一上复杂任务就容易散架。</p>
+<h2 id="为什么看起来可行"><a href="#为什么看起来可行" class="headerlink" title="为什么看起来可行"></a>为什么看起来可行</h2><p>多 agent 这件事，第一眼看上去是合理的。</p>
+<p>一个大任务拆成多个子任务，然后让不同 agent 并行去做，最后再汇总结果。这个思路在人的协作里也成立，在分布式系统里也成立，所以它天然很有吸引力。</p>
+<p>例如一个“做一个 Flappy Bird 克隆”的任务，你很容易会这样拆：</p>
+<ul>
+<li>一个 agent 负责背景和障碍物</li>
+<li>一个 agent 负责小鸟和交互</li>
+<li>最后一个 agent 负责把它们合起来</li>
+</ul>
+<p>大概就是这样：</p>
+<p><img src="/blogimg/2026/cognition-multi-agent-fragile.png"></p>
+<p>问题在于，这种结构虽然“像是在提效”，但它对前提条件要求很高。</p>
+<p>你默认每个 agent 都准确理解了任务。<br>你默认它们对风格、边界、目标、约束的理解是一致的。<br>你默认最后那个汇总 agent 有能力把前面所有偏差都修平。</p>
+<p>可实际情况往往不是这样。一个 agent 理解成了马里奥风格的背景，另一个 agent 做出来的小鸟像别的游戏素材。单看都不算全错，但拼起来就是不对。</p>
+<p>问题不在于单个 agent 能力差，而是<strong>任务一旦拆开，误解也会被拆开，而且会互相放大。</strong></p>
+<h2 id="第一个问题"><a href="#第一个问题" class="headerlink" title="第一个问题"></a>第一个问题</h2><p>很多人第一反应会觉得，那就把原始任务也传给每个子 agent 就好了。</p>
+<p>听上去合理，但工程上往往没这么简单。</p>
+<p>因为真实系统里的上下文，从来不只是用户最开始那一句需求。</p>
+<p>它通常还包括：</p>
+<ul>
+<li>前面几轮对话里澄清过的细节</li>
+<li>agent 通过工具调用拿到的信息</li>
+<li>中途已经做出的设计决策</li>
+<li>某些没明说但已经默认成立的约束</li>
+</ul>
+<p>所以你给子 agent 的，很多时候不是完整上下文，而是主 agent 处理过的一段“任务摘要”。而摘要本身就会丢信息。</p>
+<p>原文在这里给出的第一个原则，我觉得很值得记住：</p>
+<blockquote>
+<p>尽量共享完整上下文，最好共享完整 trace，而不只是某几条消息。</p>
+</blockquote>
+<p>图是这样的：</p>
+<p><img src="/blogimg/2026/cognition-shared-context.png"></p>
+<p>这个原则说白了就是一句话：<strong>不要以为传了一段说明，就等于传递了原本的理解过程。</strong></p>
+<p>对 agent 来说，很多关键决策并不写在最终消息里，而是藏在前面的推理、工具调用和取舍过程里。少掉这些，子 agent 拿到的就只是一个“差不多”的版本。</p>
+<h2 id="第二个问题"><a href="#第二个问题" class="headerlink" title="第二个问题"></a>第二个问题</h2><p>但就算已经尽量把上下文共享出去了，问题也不一定就没了。</p>
+<p><strong>很多决定，并不是显式写出来的，而是通过动作本身被做掉了。</strong></p>
+<p>比如一个 agent 开始写某种 UI 结构，选了某种代码组织方式，或者默认了某个 API 契约。它虽然没专门说“我决定这样做”，但这个决定已经发生了。</p>
+<p>这时候如果另一个 agent 在并行做别的部分，并基于另一套假设往前推进，最后冲突几乎是必然的。</p>
+<p>原文里把这个问题总结成一句话，我觉得挺准：</p>
+<p><strong>Actions carry implicit decisions.</strong></p>
+<p>也就是：</p>
+<p><strong>动作会携带隐式决策。</strong></p>
+<p>这点很像真实工程开发。两个工程师如果没有同步设计约束，分别写自己那部分代码，最后合并时经常会发现：</p>
+<ul>
+<li>命名体系不一致</li>
+<li>数据结构假设不一致</li>
+<li>错误处理方式不一致</li>
+<li>UI 风格不一致</li>
+<li>依赖边界不一致</li>
+</ul>
+<p>这还不是因为谁写得差，而是因为每个人在推进时，都顺手做了一些本该共享的决定。</p>
+<p>人类团队还能靠开会、评审、文档来补这一层，但 agent 现在在这方面还差得远。</p>
+<h2 id="为什么我更倾向单线程"><a href="#为什么我更倾向单线程" class="headerlink" title="为什么我更倾向单线程"></a>为什么我更倾向单线程</h2><p>如果按上面这个思路往下看，那我还是会更倾向单线程。<strong>在很多真正要求可靠性的任务里，单线程 agent 反而更稳。</strong></p>
+<p>结构很简单，就是一条连续上下文往前走：</p>
+<p><img src="/blogimg/2026/cognition-linear-agent.png"></p>
+<p>它不炫，也没有“多个 agent 同时工作”的观感优势。但它有一个很实际的优点：</p>
+<p><strong>上下文是连续的，决策链路也是连续的。</strong></p>
+<p>你不需要担心某个子 agent 少拿了一段背景。<br>也不需要担心另一个子 agent 在你看不到的地方做了冲突决策。</p>
+<p>很多时候，系统的稳定性不是来自“分工更细”，而是来自“决策没有断层”。</p>
+<p>在 agent 系统里，可靠性通常先于并行度。如果连一致性都保不住，那么并行只是在更快地产生冲突。</p>
+<h2 id="单线程的问题在哪"><a href="#单线程的问题在哪" class="headerlink" title="单线程的问题在哪"></a>单线程的问题在哪</h2><p>当然，单线程 agent 也不是没有问题。最直接的还是 context window。</p>
+<p>任务一长、步骤一多、历史一累积，就很容易顶到上下文上限。</p>
+<p>这里的图也很直观：</p>
+<p><img src="/blogimg/2026/cognition-context-limit.png"></p>
+<p>这个问题在短任务里不明显，但在长周期任务里会很快出现。比如：</p>
+<ul>
+<li>连续多轮的编码任务</li>
+<li>大仓库里的渐进式修改</li>
+<li>需要长时间维护状态的自动化工作流</li>
+</ul>
+<p>这时候你会发现，单线程虽然稳，但它也会“记不住”。</p>
+<p>所以真正的问题并不是“单 agent 还是多 agent”，而是：</p>
+<p><strong>当上下文变长之后，系统怎么继续保住关键决策。</strong></p>
+<h2 id="还有什么办法"><a href="#还有什么办法" class="headerlink" title="还有什么办法"></a>还有什么办法</h2><p>我觉得这篇文章比较有价值的地方，不只是批评多 agent，而是也给了一个方向：</p>
+<p><strong>不要急着把决策拆给多个并行 agent，先想办法把已有决策压缩好、继承好。</strong></p>
+<p>图示如下：</p>
+<p><img src="/blogimg/2026/cognition-context-compression.png"></p>
+<p>这里的核心思想是增加一层“上下文压缩”能力，把长历史里的关键事件、关键约束、关键决策提炼出来，再继续传给后续步骤。</p>
+<p>这个方向的好处是，它解决的是更本质的问题：</p>
+<ul>
+<li>什么信息必须被保留</li>
+<li>什么决策会影响后续动作</li>
+<li>什么上下文不能在压缩时丢掉</li>
+</ul>
+<p>这件事其实比“把任务拆成三份并行跑”更难，但也更接近真实可用系统要面对的问题。</p>
+<p>因为真正让 agent 失控的，很多时候不是模型不会写，而是系统没有把过去做过的判断保留下来。</p>
+<h2 id="为什么我认同这个说法"><a href="#为什么我认同这个说法" class="headerlink" title="为什么我认同这个说法"></a>为什么我认同这个说法</h2><p>因为这件事和普通工程经验其实是对得上的。</p>
+<p>我们做系统设计时，通常不会默认“模块越多越高级”。相反，大家会很警惕下面这些问题：</p>
+<ul>
+<li>状态同步成本</li>
+<li>跨模块沟通损耗</li>
+<li>决策边界不清</li>
+<li>接口语义漂移</li>
+<li>最后集成阶段的隐性冲突</li>
+</ul>
+<p>多 agent 的问题，本质上没有脱离这些经典工程问题。只是以前这些问题发生在人和服务之间，现在发生在 agent 和 agent 之间。</p>
+<p>所以我现在更倾向于把 agent 系统理解成这样：</p>
+<ul>
+<li>真正重要的是 context engineering</li>
+<li>并行只是可选优化，不是默认答案</li>
+<li>如果共享不了完整上下文，就不要过早把决策拆开</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后简单收一下：</p>
+<ul>
+<li>多 agent 最大的问题，不是调度，而是上下文共享不完整</li>
+<li>真正危险的，不只是消息传丢了，而是隐式决策彼此冲突</li>
+<li>在今天这个阶段，单线程 agent 往往比并行多 agent 更稳</li>
+<li>当单线程开始受限时，更优先该补的是上下文压缩与继承能力，而不是贸然加更多 agent</li>
+</ul>
+<p>这不意味着多 agent 没有未来。</p>
+<p>而是至少在现在，很多系统还没把“共享理解”这件事解决好，就已经开始追求“并行执行”了。从工程角度看，这个顺序大概率是反的。</p>
+<p>先把一致性问题解决，再谈并行，通常会稳很多。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://cognition.ai/blog/dont-build-multi-agents#applying-the-principles">Cognition: Don’t Build Multi-Agents</a></li>
+</ul>
+
+    </div>
+
+    
+
+  <section class="comments" aria-labelledby="comments-title">
+    <h2 id="comments-title">评论</h2>
+    
+      <div id="vcomment"></div>
+      <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4/dist/av-min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+      <script>
+        new Valine({
+          el: '#vcomment',
+          appId: "EylbFaoiROcSAYFbngyo5eTR-gzGzoHsz",
+          appKey: "7oXQjRGMPLzwU8KFGgx6Nvdr",
+          placeholder: "请发布你的评论:D",
+          pageSize: 10,
+          avatar: "mm",
+          lang: "zh-cn",
+          meta: ["nick","mail","link"],
+          notify: false,
+          verify: false,
+          visitor: false
+        });
+      </script>
+    
+  </section>
+
+
+  </article>
+
+  
+    <aside class="post-sidebar">
+      <div class="post-sidebar-inner">
+        <div class="post-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%9C%8B%E8%B5%B7%E6%9D%A5%E5%8F%AF%E8%A1%8C"><span class="toc-text">为什么看起来可行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">第一个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">第二个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E6%9B%B4%E5%80%BE%E5%90%91%E5%8D%95%E7%BA%BF%E7%A8%8B"><span class="toc-text">为什么我更倾向单线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%97%AE%E9%A2%98%E5%9C%A8%E5%93%AA"><span class="toc-text">单线程的问题在哪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E6%9C%89%E4%BB%80%E4%B9%88%E5%8A%9E%E6%B3%95"><span class="toc-text">还有什么办法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E8%AE%A4%E5%90%8C%E8%BF%99%E4%B8%AA%E8%AF%B4%E6%B3%95"><span class="toc-text">为什么我认同这个说法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></div>
+        <a class="back-top-link" href="#top" aria-label="返回顶部" title="返回顶部">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        </a>
+      </div>
+    </aside>
+  
+</section>
+
+    </div>
+    
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-content">
+      <p class="site-footer-copy">© Fchange 2016-2026</p>
+      <p class="site-footer-description">写技术实践，也记录生活中那些有趣的事情。</p>
+      
+        <p class="site-stats">
+          <span id="busuanzi_container_site_pv" style="display: none">总访问 <span id="busuanzi_value_site_pv"></span></span>
+          <span id="busuanzi_container_site_uv" style="display: none">访客 <span id="busuanzi_value_site_uv"></span></span>
+        </p>
+      
+    </div>
+    
+      <nav class="site-footer-links" aria-label="Footer navigation">
+        
+          <a target="_blank" rel="noopener" href="https://github.com/fchange/">GitHub</a>
+        
+          <a href="/atom.xml">RSS</a>
+        
+      </nav>
+    
+  </div>
+</footer>
+
+
+  </div>
+  <script src="/js/theme.js"></script>
+
+  <script src="/js/stats.js" data-endpoint="https://busuanzi.ibruce.info/busuanzi"></script>
+
+
+</body>
+</html>
